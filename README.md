@@ -4,7 +4,7 @@ DSponsor SDK is a library that allows you to easily integrate DSponsor into your
 
 It facilitates the creation, management, and interaction with smart contracts for advertising and sponsorship.
 
-Use the Ethereum library ethers.js.
+Uses the Ethereum library ethers.js.
 
 #### Quick Start
 
@@ -20,9 +20,6 @@ const customDsponsorSDK = new DSponsorSDK({
     chain: {
         chainName: 'ethereum-sepolia', // Example for Sepolia testnet
         rpc: 'https://sepolia.infura.io/v3/{infura_project_id}',
-        contracts: {
-            DSponsorAdmin: '0xYourContractAddressHere',
-        },
     },
     privateKey: 'your-private-key-here',
 });
@@ -58,17 +55,18 @@ new DSponsorSDK({chain, privateKey});
 - getBPS: Fetches the current Base Point Share (BPS) value.
 
 ```javascript
--dsponsorSDK.contracts.DSponsorAdmin.getBPS();
+dsponsorSDK.contracts.DSponsorAdmin.getBPS();
 ```
+
 - getCurrentTrustedForwarder: Gets the address of the current trusted forwarder.
+```javascript
+dsponsorSDK.contracts.DSponsorAdmin.getCurrentTrustedForwarder();
 ```
-javascript
-- dsponsorSDK.contracts.DSponsorAdmin.getCurrentTrustedForwarder();
-```
+- 
 - getNFTFactoryContractAddress: Retrieves the address of the NFT Factory contract.
-```
-javascript
-- dsponsorSDK.contracts.DSponsorAdmin.getNFTFactoryContractAddress(); 
+
+```javascript
+dsponsorSDK.contracts.DSponsorAdmin.getNFTFactoryContractAddress(); 
 ```
 
 - getOfferContract: Fetches the contract address for a specific offer ID.
