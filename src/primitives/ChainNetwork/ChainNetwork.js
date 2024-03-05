@@ -20,6 +20,18 @@ class ChainNetwork {
         this.chainName = chainName
         this.chainId = chainId ?? defaultConfig.chainId
     }
+
+    getCurrencyAddress(currencySymbol) {
+        return this.assets[currencySymbol];
+    }
+
+    getCurrencyDecimals(currencySymbol) {
+        if (currencySymbol === 'USDC') {
+            return 6;
+        }
+
+        return 18;
+    }
 }
 
 export default ChainNetwork;

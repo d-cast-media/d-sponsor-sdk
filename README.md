@@ -124,6 +124,58 @@ dsponsorSDK.contracts.DSponsorAdmin.isOfferAdmin(offerId, admin);
 dsponsorSDK.contracts.DSponsorAdmin.isOfferDisabled(offerId);
 ```
 
+- approve: Approves a specific amount of currency for the DSponsorAdmin contract.
+
+```javascript
+dsponsorSDK.approve({currency, amount});
+```
+
+- createDSponsorNFTAndOffer: Creates a new DSponsor NFT and offer.
+
+```javascript
+const currency = dsponsor.chain.getCurrencyAddress('USDC');
+const nftParams = {
+    tokenId: 1,
+    to: minter.address,
+    currency,
+    tokenData: 'tokenData',
+    offerId: 20,
+    adParameters: ['squareLogoURL', 'linkURL'],
+    adDatas: ['adData1', 'adData2'],
+    referralAdditionalInformation: 'additionalInformation'
+};
+const offerParams = {
+    name: "TechCast Podcast",
+    rulesURI: "https://techcast.com/rules",
+    options: {
+        admins: [minter.address],
+        validators: [minter.address],
+        adParameters: ["squareLogoURL", "linkURL"]
+    }
+};
+await dsponsor.contracts.DSponsorAdmin.createDSponsorNFTAndOffer(nftParams, offerParams);
+```
+
+
+- mintAndSubmit: Mints a new DSponsor NFT and submits it to the offer.
+
+```javascript
+const currency = dsponsor.chain.getCurrencyAddress('USDC');
+const mintParams = {
+    tokenId: 1,
+    to: minter.address,
+    currency,
+    tokenData: 'tokenData',
+    offerId: 20,
+    adParameters: ['squareLogoURL', 'linkURL'],
+    adDatas: ['adData1', 'adData2'],
+    referralAdditionalInformation: 'additionalInformation'
+};
+await dsponsor.contracts.DSponsorAdmin.mintAndSubmit(mintParams, {
+    value: feeAndValue
+})
+```
+
 #### Additional Utilities
 
 generatePrivateKey: Generates a new private key.
