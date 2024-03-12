@@ -1,11 +1,8 @@
 import {ethers} from "ethers";
 import ChainNetwork from "./primitives/ChainNetwork/ChainNetwork.js";
 import DSponsorAdmin from "./services/DSponsorAdmin/DSponsorAdmin.js";
+import generatePrivateKey from "./utils/generatePrivateKey.js";
 
-
-function generatePrivateKey() {
-    return ethers.Wallet.createRandom().privateKey;
-}
 class DSponsorSDK {
     constructor({chain, privateKey} = {}) {
         this.chain = new ChainNetwork(chain);
@@ -21,7 +18,9 @@ class DSponsorSDK {
             })
         }
     }
-
+    renderAdSpace(props){
+        return new AdSpaceRenderer(props);
+    }
     getSigner() {
         return this.signer;
     }
