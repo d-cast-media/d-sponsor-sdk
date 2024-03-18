@@ -48,7 +48,12 @@ class AdSpaceRenderer {
                 selectedAds = adList.sort(() => Math.random() - 0.5).slice(0, parseInt(count));
                 break;
             case 'grid':
-                selectedAds = adList.slice(0, parseInt(count));
+                const [rows, cols] = count.split('x') ?? [1, count];
+                const grid = [];
+                for (let i = 0; i < rows; i++) {
+                    grid.push(adList.slice(i * cols, (i + 1) * cols));
+                }
+                selectedAds = grid;
                 break;
         }
 
