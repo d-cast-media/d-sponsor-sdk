@@ -19,11 +19,18 @@ import submitAdProposal from "./methods/submitAdProposal.js";
 import transferOwnership from "./methods/transferOwnership.js";
 import updateOffer from "./methods/updateOffer.js";
 import updateProtocolFee from "./methods/updateProtocolFee.js";
+import {ApolloClient, gql, InMemoryCache} from "@apollo/client";
+import DSponsorNFT from "../DSponsorNFT/DSponsorNFT.js";
+import ChainNetwork from "../../primitives/ChainNetwork/ChainNetwork.js";
+
+const APIURL = 'https://api.studio.thegraph.com/proxy/65744/dsponsor-mumbai/0.0.4/'
 
 class DSponsorAdmin {
-    constructor({address, signer} = {}) {
+    constructor({address, signer, chain} = {}) {
         this.address = address
 
+
+        this.signer = signer;
 
         this.contract = new ethers.Contract(
             this.address,
@@ -93,6 +100,114 @@ class DSponsorAdmin {
             ],
             signer
         )
+
+        this.client = new ApolloClient({
+            uri: APIURL,
+            cache: new InMemoryCache(),
+        });
+
+        this.chain = new ChainNetwork(chain);
+
+    }
+
+    async getOffers() {
+        const getOffersQuery = `
+        {
+              updateOffers(orderDirection:desc, orderBy:offerId){
+                offerId,
+                id,
+                disable,
+                name,
+                rulesURI,
+                nftContract,
+                blockNumber,
+                blockTimestamp,
+                transactionHash,
+                __typename
+              }
+        } 
+    `;
+
+        const offersRequest = await this.client.query({
+            query: gql(getOffersQuery),
+        });
+
+        const offers = new Map();
+        for (const offer of offersRequest.data.updateOffers) {
+            offers.set(offer.offerId, offer);
+        }
+
+        return Object.values(Object.fromEntries(offers));
+    }
+
+    async getOffer(offerIdOrId) {
+
+        const isHex = (str) => {
+            return /^[0-9A-Fa-f]{6}$/.test(str);
+        }
+
+        const offerId = (isHex(offerIdOrId)) ? offerIdOrId : null;
+
+        console.log('offerId:', offerId);
+        if(offerId) {
+            const getOfferQueryByOfferId = `
+               {
+                  updateOffers(where:{
+                    offerId: ${offerId}
+                  }) {
+                    offerId
+                    id
+                    disable
+                    name
+                    rulesURI
+                    nftContract
+                    blockNumber
+                    blockTimestamp
+                    transactionHash
+                    __typename
+                  }
+                  `;
+
+            const offerRequest = await this.client.query({
+                query: gql(getOfferQueryByOfferId),
+            });
+
+            return offerRequest.data.updateOffers[0];
+        }
+
+        const getOfferQueryById = `
+        {
+                updateOffers(where:{
+                    offerId: "${offerIdOrId}"
+                }) {
+                    offerId
+                    id
+                    disable
+                    name
+                    rulesURI
+                    nftContract
+                    blockNumber
+                    blockTimestamp
+                    transactionHash
+                    __typename
+                }
+        }
+               `;
+
+        const offerRequest = await this.client.query({
+            query: gql(getOfferQueryById),
+        });
+
+        return offerRequest.data.updateOffers[0];
+    }
+
+    getDSponsorNFT(address) {
+        console.log({address})
+        return new DSponsorNFT({
+            address,
+            signer: this.signer,
+            chain: this.chain
+        });
     }
 }
 

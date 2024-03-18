@@ -57,6 +57,27 @@ Retrieves the contract address of the NFT factory associated with this DSponsor 
 
 - `String`: The NFT factory contract address.
 
+### `getOffer(offerId)`
+
+Retrieves the details of a specific offer.
+
+**Parameters:**
+
+- `offerId` (uint256): The ID of the offer.
+
+**Returns:**
+
+- `Object`: The details of the offer.
+
+### `getOffers()`
+
+Retrieves all offers managed by the DSponsor system.
+
+**Returns:**
+
+- `Object[]`: An array of offers.
+
+
 ### `getOfferContract(offerId)`
 
 Gets the contract address for a specific offer.
