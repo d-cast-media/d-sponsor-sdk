@@ -19,7 +19,7 @@ import submitAdProposal from "./methods/submitAdProposal.js";
 import transferOwnership from "./methods/transferOwnership.js";
 import updateOffer from "./methods/updateOffer.js";
 import updateProtocolFee from "./methods/updateProtocolFee.js";
-import {ApolloClient, gql, InMemoryCache} from "@apollo/client";
+import {ApolloClient, gql, InMemoryCache} from "@apollo/client/core/core.cjs";
 import DSponsorNFT from "../DSponsorNFT/DSponsorNFT.js";
 import ChainNetwork from "../../primitives/ChainNetwork/ChainNetwork.js";
 

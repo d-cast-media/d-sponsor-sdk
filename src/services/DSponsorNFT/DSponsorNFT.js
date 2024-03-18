@@ -23,7 +23,7 @@ import setContractURI from "./methods/setContractURI.js";
 import supportsInterface from "./methods/supportsInterface.js";
 import transferFrom from "./methods/transferFrom.js";
 import transferOwnership from "./methods/transferOwnership.js";
-import {ApolloClient, InMemoryCache} from "@apollo/client";
+import {ApolloClient, InMemoryCache} from "@apollo/client/core/core.cjs";
 
 const APIURL = 'https://api.studio.thegraph.com/proxy/65744/dsponsor-mumbai/0.0.4/'
 

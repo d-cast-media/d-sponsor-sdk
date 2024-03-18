@@ -1,4 +1,4 @@
-import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
+import { ApolloClient, InMemoryCache, gql } from "@apollo/client/core/core.cjs";
 import Ad from "../../../primitives/Ad/Ad.js";
 
 export default async function getAds() {
