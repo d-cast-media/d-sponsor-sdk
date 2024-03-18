@@ -1,0 +1,20 @@
+- Getting started
+    - [Creators - Quick start](getting-started/quickstart-for-creators.md)
+      - [DSponsorSDK](getting-started/quickstart-for-creators#sdk.md)
+      - [DSponsorNFT](getting-started/quickstart-for-creators#nft.md)
+    - [Integrations - Quick start](getting-started/quickstart-for-integrations.md)
+      - [SDK](getting-started/quickstart-for-integrations.md#sdk)
+      - [Iframe Integration](getting-started/quickstart-for-integrations.md#iframe-integration)
+      - [React Integration](getting-started/quickstart-for-integrations.md#react-integration)
+      - [HTML Integration](getting-started/quickstart-for-integrations.md#html)
+        - [With the SDK](getting-started/quickstart-for-integrations.md#with-the-sdk)
+        - [Pure HTML](getting-started/quickstart-for-integrations.md#pure-html)
+  - API Reference
+    - [AdSpaceRenderer](api-reference/AdSpaceRenderer.md) 
+    - [DSponsorAdmin](api-reference/DSponsorAdmin.md) 
+    - [DSponsorNFT](api-reference/DSponsorNFT.md)
+    - [DSponsorSDK](api-reference/DSponsorSDK.md)
+    - Primitives
+      - [ChainNetwork](api-reference/ChainNetwork.md)
+      - [Token](api-reference/Token.md)
+      - [Ad](api-reference/Ad.md)

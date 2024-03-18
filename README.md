@@ -9,7 +9,7 @@ Uses the Ethereum library ethers.js.
 #### Quick Start
 
 ```js
-import DSponsorSDK from 'dsponsorsdk';
+import DSponsorSDK from '@dsponsor/sdk';
 
 // Initialize with default settings (Polygon Mumbai)
 // Will use a new private key if not provided
