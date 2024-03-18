@@ -1,86 +1,76 @@
 import DSponsorNFT from "../DSponsorNFT/DSponsorNFT.js";
+import render from "./methods/render.js";
 
+/**
+ * Handles rendering of ad spaces using NFT contracts for ad data.
+ */
 class AdSpaceRenderer {
+    /**
+     * Initializes a new instance of the AdSpaceRenderer.
+     * @param {Object} props The initialization properties.
+     * @param {string} props.contract The contract address.
+     * @param {string} props.selector The DOM selector for the ad space.
+     * @param {string} props.selection The selection criteria for ads.
+     */
     constructor(props) {
         this.contract = new DSponsorNFT({
             address: props?.contract,
         });
         this.selector = props.selector;
         this.selection = props.selection;
-
-
-
         this.ads = {};
     }
 
-    async preload(){
+    /**
+     * Preloads ad data from the contract.
+     */
+    async preload() {
         const supply = await this.contract.getTotalSupply();
-
         const maxSupply = await this.contract.getMaxSupply();
-        // We assume linear distribution
-        console.log(`Supply: ${supply} / ${maxSupply}`)
+        console.log(`Supply: ${supply} / ${maxSupply}`);
 
         const ads = await this.contract.getAds();
-
         this.ads = ads;
     }
 
+    /**
+     * Selects ads based on the provided selection criteria.
+     * @param {string} selection The selection criteria, e.g., 'random 1', 'grid 2x2'.
+     * @returns {Array} An array of selected ads.
+     */
     select(selection) {
-        // selection 'random 1', 'grid 2x2'
-        // only ad data selected
         const [type, count] = selection.split(' ');
         const adList = Object.values(this.ads);
-        const selectedAds = [];
+        let selectedAds = [];
 
         switch (type) {
             case 'random':
-                const randomAds = adList.sort(() => Math.random() - 0.5);
-                selectedAds.push(randomAds.slice(0, count));
+                selectedAds = adList.sort(() => Math.random() - 0.5).slice(0, parseInt(count));
                 break;
             case 'grid':
-                const gridAds = adList.slice(0, count);
-                selectedAds.push(gridAds);
+                selectedAds = adList.slice(0, parseInt(count));
                 break;
-            // case 'carousel':
-            //     const carouselAds = adList.slice(0, count);
-            //     selectedAds.push(carouselAds);
-            //     break;
         }
 
         return selectedAds;
     }
 
-    render() {
-        const div = document.getElementById(this.selector);
-        div.style.backgroundColor = 'red';
-
-        console.log(this.ads);
-
-        const newDiv = document.createElement('div');
-        newDiv.style.backgroundColor = 'blue';
-        newDiv.innerHTML = 'Hello World';
-        div.appendChild(newDiv);
-
-        return newDiv;
-    }
-
+    /**
+     * Creates an AdSpaceRenderer instance from a contract address.
+     * @param {string} contract The contract address.
+     * @param {Object} props Additional properties to set on the renderer.
+     * @returns {AdSpaceRenderer} A new instance of AdSpaceRenderer.
+     */
     static fromContract(contract, props = {}) {
-        // const
-        console.log(contract, props)
+        const { selector = 'dsponsor', selection = 'grid 10' } = props;
 
-        const selector = props.selector ?? 'dsponsor';
-        const selection = props.selection ?? 'grid 10';
-
-        const renderer = new AdSpaceRenderer({
+        return new AdSpaceRenderer({
             contract,
             selector,
             selection
         });
-
-        return renderer;
     }
-
-
 }
 
+AdSpaceRenderer.prototype.render = render;
 export default AdSpaceRenderer;
