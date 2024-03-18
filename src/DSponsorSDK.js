@@ -18,6 +18,9 @@ class DSponsorSDK {
             })
         }
     }
+    getDSponsorAdmin() {
+        return this.contracts.DSponsorAdmin;
+    }
     renderAdSpace(props){
         return new AdSpaceRenderer(props);
     }
@@ -39,3 +42,5 @@ class DSponsorSDK {
 }
 
 export default DSponsorSDK;
+
+

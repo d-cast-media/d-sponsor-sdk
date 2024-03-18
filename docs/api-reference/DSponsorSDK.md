@@ -15,6 +15,16 @@ Initializes a new instance of `DSponsorSDK`.
 
 ## Methods
 
+
+### `getDSponsorAdmin()`
+
+Retrieves the DSponsorAdmin contract instance associated with the SDK instance. This contract is used for managing ad sponsorship and other administrative tasks.
+
+**Returns:**
+
+new DSponsorAdmin
+
+
 ### `renderAdSpace(props)`
 
 Instantiates a new `AdSpaceRenderer` using the provided properties, facilitating the integration and display of blockchain-based ad spaces in web interfaces.
