@@ -54,9 +54,7 @@ export default async function getAds() {
         if (ad.adParameter === 'linkURL') {
             adList[key].addRecord({ kind: 'linkURL', value: ad.data });
         } else if (ad.adParameter === 'imageURL') {
-            const response = await fetch(ad.data);
-            const json = await response.json();
-            adList[key].addRecord({ kind: 'imageURL', value: json.image[0] });
+            adList[key].addRecord({ kind: 'imageURL', value: ad.data });
         }
     }
 
