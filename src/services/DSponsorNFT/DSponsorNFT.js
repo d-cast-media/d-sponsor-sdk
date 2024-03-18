@@ -23,15 +23,15 @@ import setContractURI from "./methods/setContractURI.js";
 import supportsInterface from "./methods/supportsInterface.js";
 import transferFrom from "./methods/transferFrom.js";
 import transferOwnership from "./methods/transferOwnership.js";
+import {ApolloClient, InMemoryCache} from "@apollo/client";
 
+const APIURL = 'https://api.studio.thegraph.com/proxy/65744/dsponsor-mumbai/0.0.4/'
 
 class DSponsorNFT {
-    constructor({address, privateKey, chain} = {}) {
+    constructor({address, signer, chain} = {}) {
         this.chain = new ChainNetwork(chain);
 
-        let key = privateKey || generatePrivateKey();
-        const signer = new ethers.Wallet(key, this.chain.provider);
-        this.signer = signer;
+        this.signer = (signer) ? signer : new ethers.Wallet(generatePrivateKey(), this.chain.provider);
 
         this.address = address
 
@@ -128,6 +128,11 @@ class DSponsorNFT {
             ],
             this.signer
         )
+
+        this.client = new ApolloClient({
+            uri: APIURL,
+            cache: new InMemoryCache(),
+        });
     }
 }
 

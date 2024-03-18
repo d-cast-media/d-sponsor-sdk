@@ -1,6 +1,5 @@
 import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
 import Ad from "../../../primitives/Ad/Ad.js";
-const APIURL = 'https://api.studio.thegraph.com/proxy/65744/dsponsor-mumbai/0.0.4/'
 
 export default async function getAds() {
     const getOfferIdQuery = `
@@ -12,19 +11,16 @@ export default async function getAds() {
         }
     `;
 
-    const client = new ApolloClient({
-        uri: APIURL,
-        cache: new InMemoryCache(),
-    });
-
-    const offersRequest = await client.query({
+    const offersRequest = await this.client.query({
         query: gql(getOfferIdQuery),
         variables: {
             contractAddress: this.address,
         },
     });
 
+
     const offers = offersRequest.data.updateOffers;
+    if(offers.length === 0) return [];
     const offerId = offers[0].offerId;
 
     const adsRequestQuery = `
@@ -38,7 +34,7 @@ export default async function getAds() {
         }
     `;
 
-    const adsRequest = await client.query({
+    const adsRequest = await this.client.query({
         query: gql(adsRequestQuery),
         variables: {
             offerId,
@@ -56,11 +52,11 @@ export default async function getAds() {
         }
 
         if (ad.adParameter === 'linkURL') {
-            adList[key].addRecord({ kind: 'link', value: ad.data });
+            adList[key].addRecord({ kind: 'linkURL', value: ad.data });
         } else if (ad.adParameter === 'imageURL') {
             const response = await fetch(ad.data);
             const json = await response.json();
-            adList[key].addRecord({ kind: 'image', value: json.image[0] });
+            adList[key].addRecord({ kind: 'imageURL', value: json.image[0] });
         }
     }
 
