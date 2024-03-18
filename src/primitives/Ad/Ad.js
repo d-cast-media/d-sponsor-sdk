@@ -20,7 +20,9 @@ class Ad {
 
     // Helper method to generate deterministic keys
     generateKey({ provider, kind, ratio, size }) {
-        return `${provider}-${kind}-${ratio}-${size}`.replace(/--+/g, '-').trim('-');
+        return `${provider}-${kind}-${ratio}-${size}`.replace(/--+/g, '-').trim('-')
+        // replace leading and trailing hyphens
+            .replace(/^-+|-+$/g, '');
     }
 
     serialize() {
