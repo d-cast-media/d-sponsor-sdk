@@ -6,9 +6,24 @@ import ChainNetwork from "../../primitives/ChainNetwork/ChainNetwork.js";
 import generatePrivateKey from "../../utils/generatePrivateKey.js";
 import getTokenURI from "./methods/getTokenURI.js";
 import getTokenURIs from "./methods/getTokenURIs.js";
-import {ApolloClient, gql, InMemoryCache} from "@apollo/client/core/core.cjs";
+import approve from "./methods/approve.js";
+import getAds from "./methods/getAds.js";
+import getApproved from "./methods/getApproved.js";
+import getBalanceOf from "./methods/getBalanceOf.js";
+import getIsApprovedForAll from "./methods/getIsApprovedForAll.js";
+import getName from "./methods/getName.js";
+import getOwnerAddress from "./methods/getOwnerAddress.js";
+import getOwnerOf from "./methods/getOwnerOf.js";
+import getSymbol from "./methods/getSymbol.js";
+import mint from "./methods/mint.js";
+import safeTransferFrom from "./methods/safeTransferFrom.js";
+import setApprovalForAll from "./methods/setApprovalForAll.js";
+import setBaseURI from "./methods/setBaseURI.js";
+import setContractURI from "./methods/setContractURI.js";
+import supportsInterface from "./methods/supportsInterface.js";
+import transferFrom from "./methods/transferFrom.js";
+import transferOwnership from "./methods/transferOwnership.js";
 
-const APIURL = 'https://api.studio.thegraph.com/proxy/65744/dsponsor-mumbai/0.0.4/'
 
 class DSponsorNFT {
     constructor({address, privateKey, chain} = {}) {
@@ -114,83 +129,27 @@ class DSponsorNFT {
             this.signer
         )
     }
-
-
-    async getAds() {
-        const getOfferId = `
-            query {
-             updateOffers(where:{
-                nftContract: "${this.address}",
-              }) {
-                id,
-                offerId
-              }
-            }
-        `;
-        const client = new ApolloClient({
-            uri: APIURL,
-            cache: new InMemoryCache(),
-        })
-
-
-        const offersRequest = await client.query({
-            query: gql(getOfferId),
-        });
-
-        const offers = offersRequest.data.updateOffers;
-
-        const offerId = offers[0].offerId;
-
-
-        const adsRequest = `
-            query {
-               updateAdProposals(first: 500,
-                  where:{
-                    offerId: "${offerId}"
-                  }
-                ){
-                  offerId,
-                  tokenId,
-                  adParameter,
-                  data
-                }
-            }
-        `;
-
-        const ads = await client.query({
-            query: gql(adsRequest),
-        });
-
-        const adData = ads.data.updateAdProposals;
-
-        const adList= {};
-
-        for (const ad of adData) {
-            const key = `${ad.offerId}-${ad.tokenId}`
-            if(!adList[key]){
-                adList[key] = {
-                    offerId: ad.offerId,
-                    tokenId: ad.tokenId,
-                    url: null,
-                    image: null,
-                };
-            }
-            if(ad.adParameter === 'linkURL'){
-                adList[key].url = ad.data;
-            }
-            if(ad.adParameter === 'squareLogoURL'){
-                const response = await fetch(ad.data);
-                const json = await response.json();
-                adList[key].image = json.image[0];
-            }
-        }
-
-        return adList;
-    }
 }
 
+DSponsorNFT.prototype.approve = approve;
+DSponsorNFT.prototype.getAds = getAds;
+DSponsorNFT.prototype.getApproved = getApproved;
+DSponsorNFT.prototype.getBalanceOf = getBalanceOf;
+DSponsorNFT.prototype.getIsApprovedForAll = getIsApprovedForAll;
 DSponsorNFT.prototype.getMaxSupply = getMaxSupply;
-DSponsorNFT.prototype.getTotalSupply = getTotalSupply;
+DSponsorNFT.prototype.getName = getName;
+DSponsorNFT.prototype.getOwnerAddress = getOwnerAddress;
+DSponsorNFT.prototype.getOwnerOf = getOwnerOf;
+DSponsorNFT.prototype.getSymbol = getSymbol;
 DSponsorNFT.prototype.getTokenURI = getTokenURI;
 DSponsorNFT.prototype.getTokenURIs = getTokenURIs;
+DSponsorNFT.prototype.getTotalSupply = getTotalSupply;
+DSponsorNFT.prototype.mint = mint;
+DSponsorNFT.prototype.safeTransferFrom = safeTransferFrom;
+DSponsorNFT.prototype.setApprovalForAll = setApprovalForAll;
+DSponsorNFT.prototype.setBaseURI = setBaseURI;
+DSponsorNFT.prototype.setContractURI = setContractURI;
+DSponsorNFT.prototype.supportsInterface = supportsInterface;
+DSponsorNFT.prototype.transferFrom = transferFrom;
+DSponsorNFT.prototype.transferOwnership = transferOwnership;
 export default DSponsorNFT;
