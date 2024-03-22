@@ -1,5 +1,7 @@
 import DSponsorNFT from "../DSponsorNFT/DSponsorNFT.js";
 import render from "./methods/render.js";
+import preload from "./methods/preload.js";
+import select from "./methods/select.js";
 
 /**
  * Handles rendering of ad spaces using NFT contracts for ad data.
@@ -16,48 +18,15 @@ class AdSpaceRenderer {
         this.contract = new DSponsorNFT({
             address: props?.contract,
         });
+
+        this.supply = 0;
+        this.maxSupply = 0;
+
         this.selector = props.selector;
         this.selection = props.selection;
         this.ads = {};
-    }
 
-    /**
-     * Preloads ad data from the contract.
-     */
-    async preload() {
-        const supply = await this.contract.getTotalSupply();
-        const maxSupply = await this.contract.getMaxSupply();
-        console.log(`Supply: ${supply} / ${maxSupply}`);
-
-        const ads = await this.contract.getAds();
-        this.ads = ads;
-    }
-
-    /**
-     * Selects ads based on the provided selection criteria.
-     * @param {string} selection The selection criteria, e.g., 'random 1', 'grid 2x2'.
-     * @returns {Array} An array of selected ads.
-     */
-    select(selection) {
-        const [type, count] = selection.split(' ');
-        const adList = Object.values(this.ads);
-        let selectedAds = [];
-
-        switch (type) {
-            case 'random':
-                selectedAds = adList.sort(() => Math.random() - 0.5).slice(0, parseInt(count));
-                break;
-            case 'grid':
-                const [rows, cols] = count.split('x') ?? [1, count];
-                const grid = [];
-                for (let i = 0; i < rows; i++) {
-                    grid.push(adList.slice(i * cols, (i + 1) * cols));
-                }
-                selectedAds = grid;
-                break;
-        }
-
-        return selectedAds;
+        this.offerId = null;
     }
 
     /**
@@ -67,7 +36,7 @@ class AdSpaceRenderer {
      * @returns {AdSpaceRenderer} A new instance of AdSpaceRenderer.
      */
     static fromContract(contract, props = {}) {
-        const { selector = 'dsponsor', selection = 'grid 10' } = props;
+        const { selector = 'dsponsor', selection = 'grid 2x4' } = props;
 
         return new AdSpaceRenderer({
             contract,
@@ -77,5 +46,7 @@ class AdSpaceRenderer {
     }
 }
 
+AdSpaceRenderer.prototype.preload = preload;
 AdSpaceRenderer.prototype.render = render;
+AdSpaceRenderer.prototype.select = select;
 export default AdSpaceRenderer;
