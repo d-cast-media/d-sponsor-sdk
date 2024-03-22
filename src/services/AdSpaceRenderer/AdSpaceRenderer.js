@@ -2,6 +2,7 @@ import DSponsorNFT from "../DSponsorNFT/DSponsorNFT.js";
 import render from "./methods/render.js";
 import preload from "./methods/preload.js";
 import select from "./methods/select.js";
+import connect from "./methods/connect.js";
 
 /**
  * Handles rendering of ad spaces using NFT contracts for ad data.
@@ -27,6 +28,12 @@ class AdSpaceRenderer {
         this.ads = {};
 
         this.offerId = null;
+        this.bps = null;
+
+        this.currencies = [];
+        this.id = null; // id is also the txhash
+        this.allowedTokenIds = []; // TODO FIXME
+        this.prices = [];
     }
 
     /**
@@ -47,6 +54,7 @@ class AdSpaceRenderer {
 }
 
 AdSpaceRenderer.prototype.preload = preload;
+AdSpaceRenderer.prototype.connect = connect;
 AdSpaceRenderer.prototype.render = render;
 AdSpaceRenderer.prototype.select = select;
 export default AdSpaceRenderer;
