@@ -27,6 +27,7 @@ import {ApolloClient, InMemoryCache} from "@apollo/client/core/core.cjs";
 import getOfferId from "./methods/getOfferId.js";
 import getDSponsorAdmin from "./methods/getDSponsorAdmin.js";
 import getMintPrice from "./methods/getMintPrice.js";
+import getCreationInfo from "./methods/getCreationInfo.js";
 
 const APIURL = 'https://api.studio.thegraph.com/proxy/65744/dsponsor-mumbai/0.0.4/'
 
@@ -148,6 +149,7 @@ DSponsorNFT.prototype.getMintPrice = getMintPrice;
 DSponsorNFT.prototype.getIsApprovedForAll = getIsApprovedForAll;
 DSponsorNFT.prototype.getMaxSupply = getMaxSupply;
 DSponsorNFT.prototype.getName = getName;
+DSponsorNFT.prototype.getCreationInfo = getCreationInfo;
 DSponsorNFT.prototype.getOfferId = getOfferId;
 DSponsorNFT.prototype.getOwnerAddress = getOwnerAddress;
 DSponsorNFT.prototype.getOwnerOf = getOwnerOf;
