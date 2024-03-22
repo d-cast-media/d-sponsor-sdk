@@ -1,5 +1,3 @@
-import {ethers} from "ethers";
-
 const mockCreateElement = (el) => {
     return {
         style: {},
@@ -96,6 +94,8 @@ export default function render(options = {}) {
 
     container.innerHTML = '';
     const self = this;
+    // We need to get our metamask signer
+
 
     const dsponsorAdmin = self.contract.getDSponsorAdmin();
 
@@ -129,24 +129,34 @@ export default function render(options = {}) {
                 // OnClick event to buy the ad space
                 link.onclick = async (e) => {
                     e.preventDefault();
+
+                    const imageURL = window.prompt('Enter the imageURL');
+                    if (!prompt) {
+                        return;
+                    }
+                    const linkURL = window.prompt('Enter the linkURL');
+                    if (!linkURL) {
+                        return;
+                    }
                     console.log('AdSpaceRenderer: Buying ad space...');
                     let tokenId = ad.tokenId;
                     const adParameters = ["imageURL","linkURL"]
-                    // const price = await dsponsorAdmin.getOfferProposals(self.offerId, tokenId, adParameters.toString())
-                    const price = await self.contract.getMintPrice(3, self.contract.chain.getCurrencyAddress('USDC'))
-                    const value = ethers.parseUnits(price.toString(), 'ether')
-                    const tx = await dsponsorAdmin.mintAndSubmit({
+                    const valuePrice = BigInt(self.prices[0]);
+                    const bps = self.bps;
+                    const fee = (valuePrice * BigInt(bps)) / BigInt(10000); // Calculate fee based on BPS
+                    const feeAndValue = valuePrice + fee; // Total value including the fee
+
+                    const mintParameters = {
                         tokenId,
-                        to: self.contract.address,
-                        currency: self.contract.chain.getCurrencyAddress('USDC'),
+                        to: self.signer.getAddress(),
+                        currency: self.currencies[0],
                         tokenData: "tokenData",
                         offerId: self.offerId,
                         adParameters,
-                        adDatas: ["https://assets-global.website-files.com/65aa8ab5c0105409047c9dc7/65ba565258a6cca6c5a08168_Group%20595.png","https://www.google.com"],
-                        referralAdditionalInformation: "referralAdditionalInformation"
-                    }, {
-                        value
-                    });
+                        adDatas: [imageURL, linkURL],
+                        referralAdditionalInformation: self.referral
+                    }
+                    const tx = await dsponsorAdmin.mintAndSubmit(mintParameters, {value:feeAndValue.toString()});
                 }
 
                 link.appendChild(text);
