@@ -1,78 +1,160 @@
+import {ethers} from "ethers";
+
+const mockCreateElement = (el) => {
+    return {
+        style: {},
+        childrens: [],
+        sheet: {
+            insertRule: () => {
+            }
+        },
+        appendChild(node) {
+            this.childrens.push(node)
+        }
+    }
+}
 /**
  * Renders the selected ads into the specified DOM element in a grid pattern.
  * @returns {HTMLElement} The newly created div element containing the ad.
  */
-export default function render() {
-    const container = globalThis.document && document.querySelector(this.selector) || {
-        style: {}, childrens: [], appendChild(node) {
-            this.childrens.push(node)
+export default function render(options = {}) {
+    console.log('AdSpaceRenderer: Rendering ads...');
+    function createElement(el) {
+        if (typeof document !== 'undefined') {
+            return document.createElement(el);
         }
-    };
+        return mockCreateElement(el);
+    }
+
+    function createTextNode(text) {
+        if (typeof document !== 'undefined') {
+            return document.createTextNode(text);
+        }
+        return text;
+    }
+
+    // Creating and appending the style element for responsive design and themes
+    const styleElement = createElement('style');
+
+    if (document && document.head) {
+        document.head.appendChild(styleElement);
+    }
+
+    styleElement.appendChild(createTextNode(`
+       .ad-container {
+            display: grid;
+            max-width: 310px;
+            grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+            gap: 5px;
+        }
+        .ad {
+            border: 1px solid black;
+            overflow: hidden;
+            height: 50px;
+            width: 50px;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .ad-container.blue-theme {
+            color: white;
+            background-color: #2d4258;
+            border: 1px solid blue;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px;
+        }
+        .ad-container.blue-theme .ad {
+            background-color: #7dd3fc;
+            color: black;
+            border: 1px solid blue;
+            border-radius: 5px;
+            padding: 1px;
+            margin: 5px;
+        }
+        .ad-container.blue-theme .ad a {
+             color: black; 
+            text-decoration: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%; 
+            width: 100%; 
+        }
+        .ad-container.blue-theme .ad:hover {
+            background-color: #4d7f9b;
+            color: black;
+        }
+    `));
+
+    const container = createElement('div');
+    container.className = 'ad-container' + (options && options.theme === 'blue' ? ' blue-theme' : '');
     if (!container) {
         console.error('AdSpaceRenderer: Selector not found in document.');
         return;
     }
 
     container.innerHTML = '';
-    // Set up grid styling
-    container.style.display = 'grid';
-    container.style.gridTemplateRows = `repeat(${this.ads.length}, auto)`; // One row for each array of ads
-    container.style.gridGap = '10px';
+    const self = this;
 
-    // Assuming each ad has a 'url' and 'image' in its records
-    const ads = this.select(this.selection);
+    const dsponsorAdmin = self.contract.getDSponsorAdmin();
+
+    const ads = this.select(this.selection, {includeOpenAds: true});
     ads.forEach(adsRow => {
-        const rowElement = (globalThis.document && document.createElement('div') || {
-            style: {}, childrens: [], appendChild(node) {
-                this.childrens.push(node)
-            }
-        });
-        rowElement.style.display = 'grid';
-        rowElement.style.gridTemplateColumns = `repeat(${adsRow.length}, 1fr)`; // One column for each ad
-        rowElement.style.gridGap = '10px';
-
-
         adsRow.forEach(ad => {
-            console.log(ad);
-            const adElement = (globalThis.document && document.createElement('div') || {
-                style: {}, childrens: [], appendChild(node) {
-                    this.childrens.push(node)
-                }
-            });
-            adElement.style.border = '1px solid black';
-            adElement.style.display = 'flex';
-            adElement.style.justifyContent = 'center';
-            adElement.style.alignItems = 'center';
+            const adElement = createElement('div');
+            adElement.className = 'ad';
+            // Remove flex display from adElement
             adElement.style.overflow = 'hidden';
+            adElement.style.border = '1px solid black';
+            let link = createElement('a');
+            if (ad?.records?.['linkURL']) {
+                link.href = ad?.records['linkURL'] || '#';
+                link.target = '_blank';
+            }
 
-            const image = (globalThis.document && document.createElement('img') || {
-                style: {}, childrens: [], appendChild(node) {
-                    this.childrens.push(node)
+            if (ad?.records?.['imageURL']) {
+                const image = createElement('img');
+                image.src = ad.records['imageURL'] || '';
+                image.style.width = '100%';
+                image.style.height = 'auto';
+                image.style.objectFit = 'cover';
+                link.appendChild(image);
+            }
+            if (ad?.records?.['text']) {
+                const text = createElement('p');
+                text.textContent = ad.records['text'];
+                // FIXME: Optimistic case - Might just be ads data
+                // We allow to buy the ad space if no text is provided
+                // OnClick event to buy the ad space
+                link.onclick = async (e) => {
+                    e.preventDefault();
+                    console.log('AdSpaceRenderer: Buying ad space...');
+                    let tokenId = ad.tokenId;
+                    const adParameters = ["imageURL","linkURL"]
+                    // const price = await dsponsorAdmin.getOfferProposals(self.offerId, tokenId, adParameters.toString())
+                    const price = await self.contract.getMintPrice(3, self.contract.chain.getCurrencyAddress('USDC'))
+                    const value = ethers.parseUnits(price.toString(), 'ether')
+                    const tx = await dsponsorAdmin.mintAndSubmit({
+                        tokenId,
+                        to: self.contract.address,
+                        currency: self.contract.chain.getCurrencyAddress('USDC'),
+                        tokenData: "tokenData",
+                        offerId: self.offerId,
+                        adParameters,
+                        adDatas: ["https://assets-global.website-files.com/65aa8ab5c0105409047c9dc7/65ba565258a6cca6c5a08168_Group%20595.png","https://www.google.com"],
+                        referralAdditionalInformation: "referralAdditionalInformation"
+                    }, {
+                        value
+                    });
                 }
-            });
-            image.src = ad.records['imageURL'] || ''; // Example to get image URL
-            image.style.width = '100%';
-            image.style.height = 'auto';
-            image.style.objectFit = 'cover';
 
-            const link = (globalThis.document && document.createElement('a') || {
-                style: {}, childrens: [], appendChild(node) {
-                    this.childrens.push(node)
-                }
-            });
-            link.href = ad.records['linkURL'] || '#'; // Example to get link URL
-            link.target = '_blank';
-            link.style.position = 'absolute';
-            link.style.width = '100%';
-            link.style.height = '100%';
-            link.appendChild(image)
+                link.appendChild(text);
+            }
 
             adElement.appendChild(link);
-            rowElement.appendChild(adElement);
+            container.appendChild(adElement); // Append directly to container
         });
-
-        container.appendChild(rowElement);
-
     });
 
     return container;
