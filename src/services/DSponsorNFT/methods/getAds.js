@@ -2,26 +2,11 @@ import { ApolloClient, InMemoryCache, gql } from "@apollo/client/core/core.cjs";
 import Ad from "../../../primitives/Ad/Ad.js";
 
 export default async function getAds() {
-    const getOfferIdQuery = `
-        query GetOfferId($contractAddress: String!) {
-            updateOffers(where: {nftContract: $contractAddress}) {
-                id
-                offerId
-            }
-        }
-    `;
+    if(!this.offerId) {
+        this.offerId = await this.getOfferId();
+    }
 
-    const offersRequest = await this.client.query({
-        query: gql(getOfferIdQuery),
-        variables: {
-            contractAddress: this.address,
-        },
-    });
-
-
-    const offers = offersRequest.data.updateOffers;
-    if(offers.length === 0) return [];
-    const offerId = offers[0].offerId;
+    const offerId = this.offerId;
 
     const adsRequestQuery = `
         query GetAdProposals($offerId: ID!) {
