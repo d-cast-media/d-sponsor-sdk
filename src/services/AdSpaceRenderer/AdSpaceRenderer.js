@@ -34,6 +34,8 @@ class AdSpaceRenderer {
         this.id = null; // id is also the txhash
         this.allowedTokenIds = []; // TODO FIXME
         this.prices = [];
+
+        this.referral = props?.referral ?? 'dsponsor';
     }
 
     /**
@@ -43,12 +45,13 @@ class AdSpaceRenderer {
      * @returns {AdSpaceRenderer} A new instance of AdSpaceRenderer.
      */
     static fromContract(contract, props = {}) {
-        const { selector = 'dsponsor', selection = 'grid 2x4' } = props;
+        const { selector = 'dsponsor', selection = 'grid 2x4', referral } = props;
 
         return new AdSpaceRenderer({
             contract,
             selector,
-            selection
+            selection,
+            referral,
         });
     }
 }
