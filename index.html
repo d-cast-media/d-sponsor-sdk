@@ -6,10 +6,11 @@
         const sponsoredItem = AdSpaceRenderer.fromContract('0xd8ab5d4aef7c1f4a13da4e25559d688cc1e4b2b3', {
             selector: 'dsponsor',
         })
-        sponsoredItem.preload().then(() => {
-            const container = sponsoredItem.render({theme: 'blue'});
-            document.getElementById('dsponsor').appendChild(container );
-        });
+        await sponsoredItem.connect();
+        console.log('Connected to the contract');
+        await sponsoredItem.preload();
+        const container = sponsoredItem.render({theme: 'blue'});
+        document.getElementById('dsponsor').appendChild(container );
     </script>
 </head>
 <body>
