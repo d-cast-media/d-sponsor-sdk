@@ -6,6 +6,36 @@ It facilitates the creation, management, and interaction with smart contracts fo
 
 Uses the Ethereum library ethers.js.
 
+### CDN :
+
+```html
+<script src="https://unpkg.com/@dsponsor/sdk"></script>
+```
+
+### HTML example :
+
+```html
+<html>
+<head>
+    <title>Home</title>
+    <script type="module">
+        import { AdSpaceRenderer } from 'https://unpkg.com/@dsponsor/sdk';
+        const sponsoredItem = AdSpaceRenderer.fromContract('0xd8ab5d4aef7c1f4a13da4e25559d688cc1e4b2b3', {
+            selector: 'dsponsor',
+        })
+        await sponsoredItem.connect();
+        console.log('Connected to the contract');
+        await sponsoredItem.preload();
+        const container = sponsoredItem.render({theme: 'blue'});
+        document.getElementById('dsponsor').appendChild(container );
+    </script>
+</head>
+<body>
+<div id="dsponsor"></div>
+</body>
+</html>
+```
+
 #### Quick Start
 
 ```js
