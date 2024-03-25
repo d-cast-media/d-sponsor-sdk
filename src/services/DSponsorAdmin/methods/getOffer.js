@@ -46,68 +46,8 @@ export default async function getOffer(offerId) {
         queryableId: offerData.id.slice(0,66),
     }
 
-    const getAllowedTokensQuery = `
-       {
-          tokensAllowlistUpdateds(where:{
-            id_contains: "${offer.queryableId}"
-          }){
-            id,
-            tokenId,
-            allowed,
-            blockNumber,
-            blockTimestamp,
-            transactionHash,
-            __typename
-          }
-      }`;
-
-
-    const allowedTokensRequest = await this.client.query({
-        query: gql(getAllowedTokensQuery),
-    });
-
-    const allowedTokens = allowedTokensRequest.data.tokensAllowlistUpdateds.map(token => {
-        return {
-            id: token.id,
-            tokenId: token.tokenId,
-            allowed: token.allowed,
-            transactionHash: token.transactionHash,
-        }
-    });
-
-    const updateDefaultMintPricesQuery = `
-         {
-             updateDefaultMintPrices(where:{
-                id_contains: "${offer.queryableId}"
-            }){
-                id,
-                amount,
-                currency,
-                enabled,
-                amount,
-                blockNumber,
-                blockTimestamp,
-                transactionHash,
-                __typename
-             }
-        }`;
-
-
-    const updateDefaultMintPricesRequest = await this.client.query({
-        query: gql(updateDefaultMintPricesQuery),
-    });
-
-    const updateDefaultMintPrices = updateDefaultMintPricesRequest.data.updateDefaultMintPrices.map(price => {
-        return {
-            id: price.id,
-            amount: price.amount,
-            currency: price.currency,
-            enabled: price.enabled,
-            blockNumber: price.blockNumber,
-            blockTimestamp: price.blockTimestamp,
-            transactionHash: price.transactionHash,
-        }
-    });
+    const allowedTokens = await this.getAllowedTokensFromId(offer.queryableId);
+    const updateDefaultMintPrices = await this.getMintPricesFromId(offer.queryableId);
 
     return {
         offerId: offer.offerId,

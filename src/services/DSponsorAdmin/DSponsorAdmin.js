@@ -6,6 +6,7 @@ import getOfferProposals from "./methods/getOfferProposals.js";
 import isAllowedAdParameter from "./methods/isAllowedAdParameter.js";
 import isOfferAdmin from "./methods/isOfferAdmin.js";
 import isOfferDisabled from "./methods/isOfferDisabled.js";
+import getAllowedTokensFromId from "./methods/getAllowedTokensFromId.js";
 import getNFTFactoryContractAddress from "./methods/getNFTFactoryContractAddress.js";
 import getCurrentTrustedForwarder from "./methods/getCurrentTrustedForwarder.js";
 import getOwnerAddress from "./methods/getOwnerAddress.js";
@@ -28,6 +29,7 @@ import getOffer from "./methods/getOffer.js";
 import getOffers from "./methods/getOffers.js";
 import getDSponsorNFT from "./methods/getDSponsorNFT.js";
 import generatePrivateKey from "../../utils/generatePrivateKey.js";
+import getMintPricesFromId from "./methods/getMintPricesFromId.js";
 
 class DSponsorAdmin {
     constructor({address, signer, chain} = {}) {
@@ -123,6 +125,8 @@ DSponsorAdmin.prototype.createOffer = createOffer;
 DSponsorAdmin.prototype.getAdProposalFromProposalId = getAdProposalFromProposalId;
 DSponsorAdmin.prototype.getAdsProposalsFromOfferId = getAdsProposalsFromOfferId;
 DSponsorAdmin.prototype.getValidatedAdsFromOfferId = getValidatedAdsFromOfferId;
+DSponsorAdmin.prototype.getAllowedTokensFromId = getAllowedTokensFromId;
+DSponsorAdmin.prototype.getMintPricesFromId = getMintPricesFromId;
 DSponsorAdmin.prototype.getBPS = getBPS;
 DSponsorAdmin.prototype.getOffer = getOffer;
 DSponsorAdmin.prototype.getOffers = getOffers;
