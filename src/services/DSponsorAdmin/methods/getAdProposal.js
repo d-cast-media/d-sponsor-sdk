@@ -3,11 +3,12 @@ import isNumber from "../../../utils/isNumber.js";
 import Ad from "../../../primitives/Ad/Ad.js";
 
 /**
- * Get ad proposal from proposal ID
- * @param offerId
- * @returns {Promise}
+ * Get ad proposal from query
+ * @param query The query to search for
+ * @param query.proposalId The proposal ID to search for
+ * @returns {Promise<null|{offerId: null, tokenId: null, records: {}}>} A promise that resolves with the ad proposal.
  */
-export default async function getAdProposalFromProposalId(proposalId) {
+export default async function getAdProposal({proposalId}) {
     if(!isNumber(proposalId)) {
         throw new Error(`Invalid proposal ID: ${proposalId}`);
     }

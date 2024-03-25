@@ -28,11 +28,12 @@ With the SDK initialized, you can begin interacting with the DSponsor ecosystem,
 
 ```javascript
 // Accessing the DSponsorAdmin contract address
-console.log(`DSponsorAdmin Address: ${dsponsorSDK.contracts.DSponsorAdmin.address}`);
+const dsponsorAdmin = dsponsorSDK.getDSponsorAdmin();
+console.log(`DSponsorAdmin Address: ${dsponsorAdmin.address}`);
 
 // Fetching the Base Point Share (BPS) value
 async function fetchBPS() {
-    const bps = await dsponsorSDK.contracts.DSponsorAdmin.getBPS();
+    const bps = await dsponsorAdmin.getBPS();
     console.log(`Current BPS: ${bps}`);
 }
 
@@ -61,7 +62,8 @@ Minting NFTs on the DSponsor platform involves specifying details such as token 
 ```javascript
 // Define the value to be sent with the mint transaction (including any fees)
 const valuePrice = ethers.utils.parseEther('1'); // Example: 1 ETH
-const bps = await dsponsorSDK.contracts.DSponsorAdmin.getBPS(); // Fetch current BPS
+const dsponsorAdmin = dsponsorSDK.getDSponsorAdmin();
+const bps = await dsponsorAdmin.getBPS(); // Fetch current BPS
 const fee = (valuePrice * BigInt(bps)) / BigInt(10000); // Calculate fee based on BPS
 const feeAndValue = valuePrice + fee; // Total value including the fee
 
@@ -69,7 +71,7 @@ const feeAndValue = valuePrice + fee; // Total value including the fee
 const mintParams = {
     tokenId: 5,
     to: "recipientWalletAddress",
-    currency: "0xCurrencyContractAddress",
+    currency: "0xCurrencyContractAddress", // e.g: ChainNetwork.getCurrencyAddress('USDC')
     tokenData: 'Base64EncodedTokenData',
     offerId: 14,
     // by default, image are 1x1
@@ -79,7 +81,7 @@ const mintParams = {
 };
 
 // Mint the NFT
-const mintTx = await dsponsorSDK.contracts.DSponsorAdmin.mintAndSubmit(mintParams, {
+const mintTx = await dsponsorAdmin.mintAndSubmit(mintParams, {
     value: feeAndValue.toString()
 });
 

@@ -1,6 +1,16 @@
 import {gql} from "@apollo/client/core/core.cjs";
+import isNumber from "../../../utils/isNumber.js";
 
-export default async function getAllowedTokensFromId(id){
+/**
+ * Get all allowed tokens from an ID
+ * @param query The query to search for
+ * @param query.id The ID to search for (queryable id)
+ * @returns {Promise<{id: *, tokenId: *, allowed: *, transactionHash: *}[]>} A promise that resolves with the allowed tokens.
+ */
+export default async function getAllowedTokens({id}) {
+    if(!isNumber(id)) {
+        throw new Error(`Invalid ID: ${id}`);
+    }
     const getAllowedTokensQuery = `
        {
           tokensAllowlistUpdateds(where:{

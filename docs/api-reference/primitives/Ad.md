@@ -80,19 +80,19 @@ Deserializes a JSON string to an `Ad` instance.
 ## Usage Example
 
 ```javascript
-import Ad from './Ad.js';
+import Ad from './Ad.md';
 
 // Initialize an ad instance
-const ad = new Ad({ offerId: "123", tokenId: "456" });
+const ad = new Ad({offerId: "123", tokenId: "456"});
 
 // Add a link URL record
-ad.addRecord({ kind: "linkURL", value: "https://example.com" });
+ad.addRecord({kind: "linkURL", value: "https://example.com"});
 
 // Add an image URL record
-ad.addRecord({ kind: "imageURL", ratio: "1x1", size: "XL", value: "https://cdn.example.com/ad.jpg" });
+ad.addRecord({kind: "imageURL", ratio: "1x1", size: "XL", value: "https://cdn.example.com/ad.jpg"});
 
 // Retrieve the link record
-const link = ad.getRecord({ kind: "linkURL" });
+const link = ad.getRecord({kind: "linkURL"});
 console.log(link); // Outputs: https://example.com
 
 // Serialize the ad
@@ -100,6 +100,6 @@ const serializedAd = ad.serialize();
 
 // Deserialize the ad
 const deserializedAd = Ad.deserialize(serializedAd);
-console.log(deserializedAd.getRecord({ kind: "imageURL", ratio: "1x1", size: "XL" })); 
+console.log(deserializedAd.getRecord({kind: "imageURL", ratio: "1x1", size: "XL"}));
 // Outputs: https://cdn.example.com/ad.jpg
 ```

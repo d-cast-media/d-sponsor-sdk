@@ -26,7 +26,7 @@ Provides a string representation of the Token instance.
 ## Usage Example
 
 ```javascript
-import Token from './Token.js';
+import Token from './Token.md';
 
 const token = new Token({
     chainName: 'polygon-mumbai',

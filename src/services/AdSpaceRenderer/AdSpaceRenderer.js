@@ -12,7 +12,9 @@ class AdSpaceRenderer {
     /**
      * Initializes a new instance of the AdSpaceRenderer.
      * @param {Object} props The initialization properties.
-     * @param {string} props.contract The contract address.
+     * @param {string} props.address The contract address for the DSponsorAdmin contract.
+     * @param {string} props.signer The signer for the DSponsorAdmin contract.
+     * @param {string} props.chain The chain ID for the DSponsorAdmin contract.
      * @param {string} props.selector The DOM selector for the ad space.
      * @param {string} props.selection The selection criteria for ads.
      */

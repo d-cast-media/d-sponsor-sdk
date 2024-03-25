@@ -2,6 +2,7 @@ import {ethers} from "ethers";
 import ChainNetwork from "./primitives/ChainNetwork/ChainNetwork.js";
 import DSponsorAdmin from "./services/DSponsorAdmin/DSponsorAdmin.js";
 import generatePrivateKey from "./utils/generatePrivateKey.js";
+import AdSpaceRenderer from "./services/AdSpaceRenderer/AdSpaceRenderer.js";
 
 class DSponsorSDK {
     constructor({chain, privateKey} = {}) {
@@ -21,8 +22,13 @@ class DSponsorSDK {
     getDSponsorAdmin() {
         return this.contracts.DSponsorAdmin;
     }
-    renderAdSpace(props){
-        return new AdSpaceRenderer(props);
+    getAdSpaceRenderer(props) {
+        return new AdSpaceRenderer({
+            chain: this.chain,
+            signer: this.signer,
+            address: this.chain.contracts.DSponsorAdmin,
+            ...props
+        });
     }
     getSigner() {
         return this.signer;

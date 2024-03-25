@@ -24,19 +24,6 @@ Retrieves the DSponsorAdmin contract instance associated with the SDK instance. 
 
 new DSponsorAdmin
 
-
-### `renderAdSpace(props)`
-
-Instantiates a new `AdSpaceRenderer` using the provided properties, facilitating the integration and display of blockchain-based ad spaces in web interfaces.
-
-**Parameters:**
-
-- `props` (Object): The properties to initialize an `AdSpaceRenderer`.
-
-**Returns:**
-
-- An instance of `AdSpaceRenderer` configured with the provided properties.
-
 ### `getSigner()`
 
 Retrieves the ethers.js signer object associated with the SDK instance. This signer is used for signing transactions and interacting with smart contracts on the blockchain.
@@ -66,6 +53,20 @@ Approves a specified amount of a cryptocurrency or token to be spent by the DSpo
 
 - A promise that resolves to the transaction receipt of the approval transaction.
 
+
+### `getAdSpaceRenderer({address, selector, selection})`
+
+Creates a new `AdSpaceRenderer` instance with the specified contract address, DOM selector, and selection criteria. This method is a convenient way to generate an ad space renderer for a specific ad space on a web page.
+
+**Parameters:**
+
+- `address` (String): The address of DSponsorAdmin contract.
+- `selector` (String): The DOM selector for the ad space element.
+- `selection` (String): The selection criteria for displaying ads. - 
+- `signer` (Signer): The signer for the DSponsorAdmin contract. - default to signer from SDK
+- `chain` (ChainNetwork): The chain instance for DSponsorAdmin contract. - default to chain from SDK
+
+
 ## Usage Example
 
 ```javascript
@@ -86,10 +87,9 @@ await sdk.approve({
     amount: '1000000000000000000' // For example, 1 token (assuming 18 decimals)
 });
 
-// Render an ad space
-const adSpaceRenderer = sdk.renderAdSpace({
-    contract: '0xAdContractAddress',
+// Get an ad space renderer (see AdSpaceRenderer API Reference)
+const adSpaceRenderer = sdk.getAdSpaceRenderer({
     selector: 'ad-container',
-    selection: 'random 3'
+    selection: 'grid 2x4'
 });
 ```

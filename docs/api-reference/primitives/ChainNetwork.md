@@ -45,7 +45,7 @@ Returns the number of decimals for a given currency symbol.
 ## Usage Example
 
 ```javascript
-import ChainNetwork from './ChainNetwork.js';
+import ChainNetwork from './ChainNetwork.md';
 
 const chainNetwork = new ChainNetwork({
     chainName: 'polygon-mumbai',

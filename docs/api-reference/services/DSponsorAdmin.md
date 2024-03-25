@@ -57,26 +57,104 @@ Retrieves the contract address of the NFT factory associated with this DSponsor 
 
 - `String`: The NFT factory contract address.
 
-### `getOffer(offerId)`
+
+### `getAdProposal(query)`
+
+Retrieves an ad proposal by its proposal ID.
+
+**Parameters:**
+
+- `query` (Object): The query object.
+  - `proposalId` (String): The ID of the proposal.
+
+**Returns:**
+
+- `Object`: The ad proposal details.
+  - `offerId` (String): The ID of the offer.
+  - `tokenId` (String): The ID of the token.
+  - `records` (Object): The proposal records.
+
+**Example:**
+
+```javascript
+const proposal = await admin.getAdProposal({ proposalId: 'PROPOSAL_ID' });
+```
+
+### `getAdProposals(query)`
+
+Retrieves ad proposals based on the specified query.
+
+**Parameters:**
+
+- `query` (Object): The query object.
+  - `offerId` (String): The ID of the offer.
+
+**Returns:**
+
+- `Promise<null|Ad[]>`: A promise that resolves with the ad proposals.
+
+
+### `getAllowedTokens(query)`
+
+Retrieves all allowed tokens for a specific offer.
+
+**Parameters:**
+
+- `query` (Object): The query object.
+  - `id` (String): The ID of the offer.
+
+**Returns:**
+
+- `Promise<Object[]>`: A promise that resolves with the allowed tokens.
+  - `id` (String): The ID of the offer.
+  - `tokenId` (String): The token ID.
+  - `allowed` (Boolean): Whether the token is allowed.
+  - `transactionHash` (String): The transaction hash of the offer.
+
+
+### `getMintPrices(query)`
+
+Retrieves the mint prices for a specific offer.
+
+**Parameters:**
+
+- `query` (Object): The query object.
+  - `id` (String): The ID of the offer.
+
+**Returns:**
+
+- `Promise<Object[]>`: A promise that resolves with the mint prices.
+  - `id` (String): The ID of the offer.
+  - `amount` (String): The amount of the price.
+  - `currency` (String): The currency of the price.
+  - `enabled` (Boolean): Whether the price is enabled.
+  - `blockNumber` (Number): The block number of the price.
+  - `blockTimestamp` (Number): The block timestamp of the price.
+  - `transactionHash` (String): The transaction hash of the price.
+
+### `getOffer(query)`
 
 Retrieves the details of a specific offer.
 
 **Parameters:**
 
-- `offerId` (uint256): The ID of the offer.
+- `query` (Object): The query object.
+  - `offerId` (String): The ID of the offer.
 
 **Returns:**
 
-- `Object`: The details of the offer.
-
-### `getOffers()`
-
-Retrieves all offers managed by the DSponsor system.
-
-**Returns:**
-
-- `Object[]`: An array of offers.
-
+- `Promise<Object>`: A promise that resolves with the offer details.
+  - `queryableId` (String): The queryable ID of the offer.
+  - `disable` (Boolean): Whether the offer is disabled.
+  - `nftContract` (String): The address of the NFT contract.
+  - `allowedTokens` (String[]): An array of allowed tokens.
+  - `name` (String): The name of the offer.
+  - `offerId` (String): The ID of the offer.
+  - `rulesURI` (String): The URI for the offer's rules.
+  - `id` (String): The ID of the offer.
+  - `maxSupply` (Number): The maximum supply of the offer.
+  - `prices` (String[]): An array of prices.
+  - `currencies` (String[]): An array of currencies.
 
 ### `getOfferContract(offerId)`
 
@@ -103,6 +181,68 @@ Retrieves proposals for a specific offer, token, and advertisement parameter.
 **Returns:**
 
 - `Object[]`: An array of proposals.
+
+
+### `getOffers()`
+
+Retrieves all offers managed by the DSponsor system.
+
+**Returns:**
+
+- `Object[]`: An array of offers.
+  - `offerId` (String): The ID of the offer.
+  - `id` (String): The ID of the offer.
+  - `disable` (Boolean): Whether the offer is disabled.
+  - `name` (String): The name of the offer.
+  - `rulesURI` (String): The URI for the offer's rules.
+  - `nftContract` (String): The address of the NFT contract.
+  - `blockNumber` (Number): The block number of the offer.
+  - `blockTimestamp` (Number): The block timestamp of the offer.
+  - `transactionHash` (String): The transaction hash of the offer.
+
+Note: The `getOffers` method misses the `maxSupply`, `prices`, and `currencies` fields.  
+Use the `getOffer` method to get the full details of a specific offer.
+
+
+### `getOwnerAddress()`
+
+Retrieves the owner address of the contract.
+
+**Returns:**
+
+- `String`: The owner address of the contract.
+
+### `getRecipientAddress()`
+
+Retrieves the recipient address for the protocol fee.
+
+**Returns:**
+
+- `String`: The recipient address for the protocol fee.
+
+
+### `getSwapRouterAddress()`
+
+Retrieves the address of the swap router.
+
+**Returns:**
+
+- `String`: The address of the swap router.
+
+
+### `getValidatedAds(query)`
+
+Retrieves validated ads based on the specified query.
+
+**Parameters:**
+
+- `query` (Object): The query object.
+  - `offerId` (String): The ID of the offer.
+
+**Returns:**
+
+- `Promise<null|Ad[]>`: A promise that resolves with the validated ads.
+
 
 ### `isAllowedAdParameter(offerId, adParameter)`
 

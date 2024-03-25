@@ -6,7 +6,7 @@ import getOfferProposals from "./methods/getOfferProposals.js";
 import isAllowedAdParameter from "./methods/isAllowedAdParameter.js";
 import isOfferAdmin from "./methods/isOfferAdmin.js";
 import isOfferDisabled from "./methods/isOfferDisabled.js";
-import getAllowedTokensFromId from "./methods/getAllowedTokensFromId.js";
+import getAllowedTokens from "./methods/getAllowedTokens.js";
 import getNFTFactoryContractAddress from "./methods/getNFTFactoryContractAddress.js";
 import getCurrentTrustedForwarder from "./methods/getCurrentTrustedForwarder.js";
 import getOwnerAddress from "./methods/getOwnerAddress.js";
@@ -22,13 +22,13 @@ import transferOwnership from "./methods/transferOwnership.js";
 import updateOffer from "./methods/updateOffer.js";
 import updateProtocolFee from "./methods/updateProtocolFee.js";
 import ChainNetwork from "../../primitives/ChainNetwork/ChainNetwork.js";
-import getAdsProposalsFromOfferId from "./methods/getAdsProposalsFromOfferId.js";
-import getValidatedAdsFromOfferId from "./methods/getValidatedAdsFromOfferId.js";
-import getAdProposalFromProposalId from "./methods/getAdProposalFromProposalId.js";
+import getAdsProposals from "./methods/getAdsProposals.js";
+import getValidatedAds from "./methods/getValidatedAds.js";
+import getAdProposal from "./methods/getAdProposal.js";
 import getOffer from "./methods/getOffer.js";
 import getOffers from "./methods/getOffers.js";
 import getDSponsorNFT from "./methods/getDSponsorNFT.js";
-import getMintPricesFromId from "./methods/getMintPricesFromId.js";
+import getMintPrices from "./methods/getMintPrices.js";
 import generatePrivateKey from "../../utils/generatePrivateKey.js";
 
 class DSponsorAdmin {
@@ -122,11 +122,11 @@ class DSponsorAdmin {
 
 DSponsorAdmin.prototype.createDSponsorNFTAndOffer = createDSponsorNFTAndOffer;
 DSponsorAdmin.prototype.createOffer = createOffer;
-DSponsorAdmin.prototype.getAdProposalFromProposalId = getAdProposalFromProposalId;
-DSponsorAdmin.prototype.getAdsProposalsFromOfferId = getAdsProposalsFromOfferId;
-DSponsorAdmin.prototype.getValidatedAdsFromOfferId = getValidatedAdsFromOfferId;
-DSponsorAdmin.prototype.getAllowedTokensFromId = getAllowedTokensFromId;
-DSponsorAdmin.prototype.getMintPricesFromId = getMintPricesFromId;
+DSponsorAdmin.prototype.getAdProposal = getAdProposal;
+DSponsorAdmin.prototype.getAdsProposals = getAdsProposals;
+DSponsorAdmin.prototype.getValidatedAds = getValidatedAds;
+DSponsorAdmin.prototype.getAllowedTokens = getAllowedTokens;
+DSponsorAdmin.prototype.getMintPrices = getMintPrices;
 DSponsorAdmin.prototype.getBPS = getBPS;
 DSponsorAdmin.prototype.getOffer = getOffer;
 DSponsorAdmin.prototype.getOffers = getOffers;

@@ -10,11 +10,18 @@
         - [With the SDK](getting-started/quickstart-for-integrations.md#with-the-sdk)
         - [Pure HTML](getting-started/quickstart-for-integrations.md#pure-html)
   - API Reference
-    - [AdSpaceRenderer](api-reference/AdSpaceRenderer.md) 
-    - [DSponsorAdmin](api-reference/DSponsorAdmin.md) 
-    - [DSponsorNFT](api-reference/DSponsorNFT.md)
     - [DSponsorSDK](api-reference/DSponsorSDK.md)
     - Primitives
-      - [ChainNetwork](api-reference/ChainNetwork.md)
-      - [Token](api-reference/Token.md)
-      - [Ad](api-reference/Ad.md)
+      - [Ad](api-reference/primitives/Ad.md)
+      - [ChainNetwork](api-reference/primitives/ChainNetwork.md)
+      - [Token](api-reference/primitives/Token.md)
+    - Services:
+        - [AdSpaceRenderer](api-reference/services/AdSpaceRenderer.md)
+        - [DSponsorAdmin](api-reference/services/DSponsorAdmin.md)
+        - [DSponsorNFT](api-reference/services/DSponsorNFT.md)
+    - Utils:
+      - [convertABIToShortABI](api-reference/utils/convertABIToShortABI.md)
+      - [generatePrivateKey](api-reference/utils/generatePrivateKey.md)
+      - [isHexadecimal](api-reference/utils/isHexadecimal.md)
+      - [isNumber](api-reference/utils/isNumber.md)
+      - [stringToUint256](api-reference/utils/stringToUint256.md)

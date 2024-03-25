@@ -4,9 +4,6 @@
 Alongside with the interface to interact with the DSponsor smart-contracts. 
 The DSponsor SDK also provides a way to integrates easily with your app.
 
-
-
-
 ### SDK 
 
 1. **Install the SDK**: Ensure `@dsponsor/sdk` is installed in your project. If not, add it via npm or yarn.
@@ -16,9 +13,8 @@ The DSponsor SDK also provides a way to integrates easily with your app.
 ```javascript
 import { AdSpaceRenderer } from "@dsponsor/sdk";
 
-const sponsoredItem = AdSpaceRenderer.fromContract('YOUR_CONTRACT_ADDRESS', {
-    selector: 'dsponsor',
-});
+const OFFER_ID = 1;
+const sponsoredItem = AdSpaceRenderer.fromOffer(OFFER_ID);
 ```
 
 Preload and Display Ads: Before displaying ads, preload the ad data, then select and render the ads within your specified element.
@@ -70,7 +66,7 @@ Import and Initialize: Within your component, import AdSpaceRenderer and initial
 import { AdSpaceRenderer } from "@dsponsor/sdk";
 
 // Inside your component
-const sponsoredItem = AdSpaceRenderer.fromContract('0x5c8cfe4d7677878738cca448e4708af61311ef16', {
+const sponsoredItem = AdSpaceRenderer.fromOffer(10, {
     selector: 'dsponsor',
 });
 
@@ -81,21 +77,20 @@ Fetch and Set Ads: Use the useEffect hook to preload ads and store them in your 
 useEffect(() => {
     (async () => {
         await sponsoredItem.preload();
-        const ads = sponsoredItem.select('random 1'); // Adjust as needed
+        // await sponsoredItem.connect(); // Optional for transaction support - Allow to connect a signer (e.g. Metamask)
+        const ads = sponsoredItem.select('grid 2x4');
         setAds(ads);
     })();
 }, []);
 ```
 Render Ads: Use the ad data stored in your component's state to dynamically render ad spaces within your component.
 
-Render Ads: Use the ad data stored in your component's state to dynamically render ad spaces within your component.
-
 ```javascript
 return (
     <div>
         {ads.map(ad => (
-             <a href={ad.records['link']} key={ad.offerId + '-' + ad.tokenId} style={{ display: 'block', marginBottom: '10px' }}>
-                <img src={ad.records['image-1x1']} alt="Ad" style={{ width: '100%', height: 'auto' }}/>
+             <a href={ad.records['linkURL']} key={ad.offerId + '-' + ad.tokenId} style={{ display: 'block', marginBottom: '10px' }}>
+                <img src={ad.records['imageURL']} alt="Ad" style={{ width: '100%', height: 'auto' }}/>
             </a>
         ))}
     </div>
@@ -109,38 +104,49 @@ Users can also integrate DSponsor by adding a simple HTML snippet to their websi
 #### With the SDK
 
 ```html
+<html>
+<head>
+    <title>Home</title>
+    <script type="module">
+        import { AdSpaceRenderer } from 'https://unpkg.com/@dsponsor/sdk';
+        const sponsoredItem = AdSpaceRenderer.fromOffer(23, {
+            selector: 'dsponsor',
+        })
+        await sponsoredItem.connect();
+        console.log('Connected to the contract');
+        await sponsoredItem.preload();
+        const container = sponsoredItem.render({theme: 'blue'});
+        document.getElementById('dsponsor').appendChild(container);
+    </script>
+</head>
+<body>
 <div id="dsponsor"></div>
-<script src="https://dsponsor.github.io/sdk/dist/dsponsorsdk.js"></script>
-<script>
-    const dsponsorSDK = new DSponsorSDK({
-        // Optional: Provide a custom chain or parent dom selector
-    });
-    // Will render the adspaces in the div with id "dsponsor"
-    dsponsorSDK.render();
-</script>
+</body>
+</html>
 ```
 
 #### Pure HTML
 
 This method will provide with a CSS customisable grid, and using deterministic link and image.  
-Via the endpoints `https://relayer.dsponsor.com/adspaces/{contractAddress}/{tokenId}/image` and `https://relayer.dsponsor.com/adspaces/{contractAddress}/{tokenId}/link`.
-This is to be repeted for each available adspace token.
+Via the endpoints `https://relayer.dsponsor.com/ad/{offerId}/{tokenId}/image` and `https://relayer.dsponsor.com/ad/{offerId}/{tokenId}/link`.
+This is to be repeated for each available adspace token.
 
 ```html
 <div id="dsponsor">
     <div class="ad-space">
-        <a href="https://relayer.dsponsor.com/adspaces/0xYourContractAddress/0/link">
-            <img src="https://relayer.dsponsor.com/adspaces/0xYourContractAddress/0/image" alt="AdSpace" />
+        <!-- Replace [offerId] and [tokenId] with the actual values -->
+        <a href="https://relayer.dsponsor.com/ad/[offerId]/0/link">
+            <img src="https://relayer.dsponsor.com/ad/[offerId]/0/image" alt="AdSpace" />
         </a>
     </div>
+   <div class="ad-space">
+       <a href="https://relayer.dsponsor.com/ad/[offerId]/1/link">
+           <img src="https://relayer.dsponsor.com/ad/[offerId]/1/image" alt="AdSpace" />
+       </a>
+   </div>
     <div class="ad-space">
-        <a href="https://relayer.dsponsor.com/adspaces/0xYourContractAddress/0/link">
-            <img src="https://relayer.dsponsor.com/adspaces/0xYourContractAddress/0/image" alt="AdSpace" />
-        </a>
-    </div>
-    <div class="ad-space">
-        <a href="https://relayer.dsponsor.com/adspaces/0xYourContractAddress/0/link">
-            <img src="https://relayer.dsponsor.com/adspaces/0xYourContractAddress/0/image" alt="AdSpace" />
+        <a href="https://relayer.dsponsor.com/ad/[offerId]/2/link">
+            <img src="https://relayer.dsponsor.com/ad/[offerId]/2/image" alt="AdSpace" />
         </a>
     </div>
 </div>

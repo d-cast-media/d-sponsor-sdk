@@ -1,6 +1,12 @@
 import {gql} from "@apollo/client/core/core.cjs";
 
-export default async function getMintPricesFromId(id){
+/**
+ * Get mint prices from ID
+ * @param query The query to search for
+ * @param query.id The ID to search for (queryable id)
+ * @returns {Promise<{id: *, amount: *, currency: *, enabled: *, blockNumber: *, blockTimestamp: *, transactionHash: *}[]>} A promise that resolves with the mint prices.
+ */
+export default async function getMintPrices({id}){
     const updateDefaultMintPricesQuery = `
          {
              updateDefaultMintPrices(where:{

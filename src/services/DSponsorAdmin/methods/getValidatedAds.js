@@ -3,11 +3,14 @@ import isNumber from "../../../utils/isNumber.js";
 import Ad from "../../../primitives/Ad/Ad.js";
 
 /**
- * Get ads from offer ID
- * @param offerId
- * @returns {Promise}
+ * Get validated ads from offer ID
+ *
+ * @param query The query to search for
+ * @param query.offerId The offer ID to search for
+ * @returns {Promise<Ad[]>} A promise that resolves with the validated ads.
+ *
  */
-export default async function getValidatedAdsFromOfferId(offerId) {
+export default async function getValidatedAds({offerId}) {
     if (!isNumber(offerId)) {
         throw new Error(`Invalid offer ID: ${offerId}`);
     }
@@ -65,7 +68,7 @@ export default async function getValidatedAdsFromOfferId(offerId) {
             // For each records, fetch the proposal
             for (const adParameter in records) {
                 const proposalId = records[adParameter];
-                const proposal = await this.getAdProposalFromProposalId(proposalId);
+                const proposal = await this.getAdProposal({proposalId});
 
                 const key = `${offerId}-${tokenId}`;
                 if (!adList[key]) {

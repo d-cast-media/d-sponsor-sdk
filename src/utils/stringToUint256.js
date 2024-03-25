@@ -1,5 +1,10 @@
 import {keccak256, toUtf8Bytes} from "ethers";
 
+/**
+ * Convert a string to a uint256
+ * @param s {string}
+ * @returns {bigint} uint256 as a BigInt
+ */
 export default function stringToUint256(s) {
     const normalized = s
         .toLowerCase()

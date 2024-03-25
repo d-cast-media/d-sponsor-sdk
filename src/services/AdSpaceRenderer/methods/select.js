@@ -1,7 +1,12 @@
 /**
  * Selects ads based on the provided selection criteria.
- * @param {string} selection The selection criteria, e.g., 'random 1', 'grid 2x2'.
- * @returns {Array} An array of selected ads.
+ * @param {string} selection - Selection criteria. Format: 'random <count>' or 'grid <rows>x<cols>'.
+ * Upon 'grid' selection, the function will fill the empty slots with placeholders.
+ * @returns {Array} - Array of selected ads.
+ * @example
+ * select('random 5');
+ * select('grid 2x2');
+ *
  */
 export default function select(selection) {
     const [type, count] = selection.split(' ');
@@ -17,8 +22,6 @@ export default function select(selection) {
             const grid = [];
             // List of array of available id without those in adList as string
             let availableSlots = this.offer.allowedTokens;
-            // let availableSlots = Array.from({ length: parseInt(this.offer.maxSupply) }, (_, i) => i + 1).map(String);
-
 
             for (let i = 0; i < rows; i++) {
                 // We need to create a row of ads, with placeholders for empty slots
@@ -42,7 +45,6 @@ export default function select(selection) {
                 grid.push(row);
             }
             selectedAds = grid;
-            console.log({ selectedAds });
             break;
     }
     return selectedAds;
