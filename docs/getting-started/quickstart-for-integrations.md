@@ -75,13 +75,13 @@ Fetch and Set Ads: Use the useEffect hook to preload ads and store them in your 
 
 ```javascript
 useEffect(() => {
-    (async () => {
+    async function fetchAds() {
         await sponsoredItem.preload();
-        // await sponsoredItem.connect(); // Optional for transaction support - Allow to connect a signer (e.g. Metamask)
         const ads = sponsoredItem.select('grid 2x4');
         setAds(ads);
-    })();
-}, []);
+    }
+    fetchAds();
+}, [sponsoredItem]);
 ```
 Render Ads: Use the ad data stored in your component's state to dynamically render ad spaces within your component.
 
