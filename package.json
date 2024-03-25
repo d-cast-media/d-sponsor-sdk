@@ -1,6 +1,6 @@
 {
   "name": "@dsponsor/sdk",
-  "version": "1.2.1",
+  "version": "1.3.0",
   "description": "SDK for DSponsor integration",
   "main": "src/index.js",
   "browser": "dist/index.js",
