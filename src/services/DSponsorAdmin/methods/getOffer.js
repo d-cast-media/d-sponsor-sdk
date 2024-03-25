@@ -28,8 +28,11 @@ export default async function getOffer(offerId) {
         query: gql(getOfferQueryByOfferId),
     });
 
-    const offerData = offerRequest.data.updateOffers[0];
+    const offerData = offerRequest?.data?.updateOffers[0] || {};
 
+    if(!offerData.offerId) {
+        throw new Error(`Offer ${offerId} not found`);
+    }
     const offer = {
         offerId: offerData.offerId,
         id: offerData.id,

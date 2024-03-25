@@ -3,7 +3,7 @@
     <title>Home</title>
     <script type="module">
         import { AdSpaceRenderer } from 'https://unpkg.com/@dsponsor/sdk';
-        const sponsoredItem = AdSpaceRenderer.fromContract('0xd8ab5d4aef7c1f4a13da4e25559d688cc1e4b2b3', {
+        const sponsoredItem = AdSpaceRenderer.fromOffer(23, {
             selector: 'dsponsor',
         })
         await sponsoredItem.connect();

@@ -1,6 +1,7 @@
 
 /**
  * Preloads ad data from the contract.
+ * @returns {Promise<void>} A promise that resolves when the data is preloaded.
  */
 export default async function preload() {
     const offer = await this.admin.getOffer(this.offerId);

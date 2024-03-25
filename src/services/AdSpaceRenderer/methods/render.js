@@ -13,6 +13,10 @@ const mockCreateElement = (el) => {
 }
 /**
  * Renders the selected ads into the specified DOM element in a grid pattern.
+ * @param {Object} options The options for rendering the ads.
+ * @param {string} options.theme The theme for the ad space.
+ * @param {string} options.tokenData The token data for the ad space.
+ * @param {string} options.referral The referral code for the ad space.
  * @returns {HTMLElement} The newly created div element containing the ad.
  */
 export default function render(options = {}) {
@@ -97,7 +101,7 @@ export default function render(options = {}) {
     // We need to get our metamask signer
 
 
-    const dsponsorAdmin = self.contract.getDSponsorAdmin();
+    const dsponsorAdmin = self.admin;
 
     const ads = this.select(this.selection, {includeOpenAds: true});
     ads.forEach(adsRow => {
@@ -155,7 +159,7 @@ export default function render(options = {}) {
                         offerId: self.offerId,
                         adParameters,
                         adDatas: [imageURL, linkURL],
-                        referralAdditionalInformation: self.referral
+                        referralAdditionalInformation: options?.referral ?? self.referral
                     }
                     try{
                         await dsponsorAdmin.mintAndSubmit(mintParameters, {value:feeAndValue.toString()});
