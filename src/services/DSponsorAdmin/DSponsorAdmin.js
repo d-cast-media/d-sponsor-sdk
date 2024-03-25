@@ -1,4 +1,5 @@
 import {ethers} from "ethers";
+import {ApolloClient, gql, InMemoryCache} from "@apollo/client/core/core.cjs";
 import getOfferContract from "./methods/getOfferContract.js";
 import getBPS from "./methods/getBPS.js";
 import getOfferProposals from "./methods/getOfferProposals.js";
@@ -19,15 +20,14 @@ import submitAdProposal from "./methods/submitAdProposal.js";
 import transferOwnership from "./methods/transferOwnership.js";
 import updateOffer from "./methods/updateOffer.js";
 import updateProtocolFee from "./methods/updateProtocolFee.js";
-import {ApolloClient, gql, InMemoryCache} from "@apollo/client/core/core.cjs";
-import DSponsorNFT from "../DSponsorNFT/DSponsorNFT.js";
 import ChainNetwork from "../../primitives/ChainNetwork/ChainNetwork.js";
-import generatePrivateKey from "../../utils/generatePrivateKey.js";
-import isNumber from "../../utils/isNumber.js";
 import getAdsProposalsFromOfferId from "./methods/getAdsProposalsFromOfferId.js";
 import getValidatedAdsFromOfferId from "./methods/getValidatedAdsFromOfferId.js";
 import getAdProposalFromProposalId from "./methods/getAdProposalFromProposalId.js";
 import getOffer from "./methods/getOffer.js";
+import getOffers from "./methods/getOffers.js";
+import getDSponsorNFT from "./methods/getDSponsorNFT.js";
+import generatePrivateKey from "../../utils/generatePrivateKey.js";
 
 class DSponsorAdmin {
     constructor({address, signer, chain} = {}) {
@@ -115,46 +115,6 @@ class DSponsorAdmin {
             uri: this.chain.graphApiUrl,
             cache: new InMemoryCache(),
         });
-
-
-    }
-
-    async getOffers() {
-        const getOffersQuery = `
-        {
-              updateOffers(orderDirection:desc, orderBy:offerId){
-                offerId,
-                id,
-                disable,
-                name,
-                rulesURI,
-                nftContract,
-                blockNumber,
-                blockTimestamp,
-                transactionHash,
-                __typename
-              }
-        } 
-    `;
-
-        const offersRequest = await this.client.query({
-            query: gql(getOffersQuery),
-        });
-
-        const offers = new Map();
-        for (const offer of offersRequest.data.updateOffers) {
-            offers.set(offer.offerId, offer);
-        }
-
-        return Object.values(Object.fromEntries(offers));
-    }
-
-    getDSponsorNFT(address) {
-        return new DSponsorNFT({
-            address,
-            signer: this.signer,
-            chain: this.chain
-        });
     }
 }
 
@@ -165,6 +125,8 @@ DSponsorAdmin.prototype.getAdsProposalsFromOfferId = getAdsProposalsFromOfferId;
 DSponsorAdmin.prototype.getValidatedAdsFromOfferId = getValidatedAdsFromOfferId;
 DSponsorAdmin.prototype.getBPS = getBPS;
 DSponsorAdmin.prototype.getOffer = getOffer;
+DSponsorAdmin.prototype.getOffers = getOffers;
+DSponsorAdmin.prototype.getDSponsorNFT = getDSponsorNFT;
 DSponsorAdmin.prototype.getCurrentTrustedForwarder = getCurrentTrustedForwarder;
 DSponsorAdmin.prototype.getNFTFactoryContractAddress = getNFTFactoryContractAddress;
 DSponsorAdmin.prototype.getOfferContract = getOfferContract;
