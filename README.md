@@ -72,68 +72,29 @@ fetchBPS();
 ### API Reference
 
 - Getting started
-    - [Creators - Quick start](getting-started/quickstart-for-creators.md)
-        - [DSponsorSDK](getting-started/quickstart-for-creators#sdk.md)
-        - [DSponsorNFT](getting-started/quickstart-for-creators#nft.md)
-    - [Integrations - Quick start](getting-started/quickstart-for-integrations.md)
-        - [SDK](getting-started/quickstart-for-integrations.md#sdk)
-        - [Iframe Integration](getting-started/quickstart-for-integrations.md#iframe-integration)
-        - [React Integration](getting-started/quickstart-for-integrations.md#react-integration)
-        - [HTML Integration](getting-started/quickstart-for-integrations.md#html)
-            - [With the SDK](getting-started/quickstart-for-integrations.md#with-the-sdk)
-            - [Pure HTML](getting-started/quickstart-for-integrations.md#pure-html)
-
-
-[//]: # (- Getting started)
-
-[//]: # (    - [Creators - Quick start]&#40;getting-started/quickstart-for-creators.md&#41;)
-
-[//]: # (        - [DSponsorSDK]&#40;getting-started/quickstart-for-creators#sdk.md&#41;)
-
-[//]: # (        - [DSponsorNFT]&#40;getting-started/quickstart-for-creators#nft.md&#41;)
-
-[//]: # (    - [Integrations - Quick start]&#40;getting-started/quickstart-for-integrations.md&#41;)
-
-[//]: # (        - [SDK]&#40;getting-started/quickstart-for-integrations.md#sdk&#41;)
-
-[//]: # (        - [Iframe Integration]&#40;getting-started/quickstart-for-integrations.md#iframe-integration&#41;)
-
-[//]: # (        - [React Integration]&#40;getting-started/quickstart-for-integrations.md#react-integration&#41;)
-
-[//]: # (        - [HTML Integration]&#40;getting-started/quickstart-for-integrations.md#html&#41;)
-
-[//]: # (            - [With the SDK]&#40;getting-started/quickstart-for-integrations.md#with-the-sdk&#41;)
-
-[//]: # (            - [Pure HTML]&#40;getting-started/quickstart-for-integrations.md#pure-html&#41;)
-
-[//]: # (    - API Reference)
-
-[//]: # (        - [DSponsorSDK]&#40;api-reference/DSponsorSDK.md&#41;)
-
-[//]: # (        - Primitives)
-
-[//]: # (            - [Ad]&#40;api-reference/primitives/Ad.md&#41;)
-
-[//]: # (            - [ChainNetwork]&#40;api-reference/primitives/ChainNetwork.md&#41;)
-
-[//]: # (            - [Token]&#40;api-reference/primitives/Token.md&#41;)
-
-[//]: # (        - Services:)
-
-[//]: # (            - [AdSpaceRenderer]&#40;api-reference/services/AdSpaceRenderer.md&#41;)
-
-[//]: # (            - [DSponsorAdmin]&#40;api-reference/services/DSponsorAdmin.md&#41;)
-
-[//]: # (            - [DSponsorNFT]&#40;api-reference/services/DSponsorNFT.md&#41;)
-
-[//]: # (        - Utils:)
-
-[//]: # (            - [convertABIToShortABI]&#40;api-reference/utils/convertABIToShortABI.md&#41;)
-
-[//]: # (            - [generatePrivateKey]&#40;api-reference/utils/generatePrivateKey.md&#41;)
-
-[//]: # (            - [isHexadecimal]&#40;api-reference/utils/isHexadecimal.md&#41;)
-
-[//]: # (            - [isNumber]&#40;api-reference/utils/isNumber.md&#41;)
-
-[//]: # (            - [stringToUint256]&#40;api-reference/utils/stringToUint256.md&#41;)
+    - [Creators - Quick start](https://d-cast-media.github.io/d-sponsor-sdk/#/getting-started/quickstart-for-creators)
+        - [DSponsorSDK](https://d-cast-media.github.io/d-sponsor-sdk/#/getting-started/quickstart-for-creators#sdk)
+        - [DSponsorNFT](https://d-cast-media.github.io/d-sponsor-sdk/#/getting-started/quickstart-for-creators#nft)
+    - [Integrations - Quick start](https://d-cast-media.github.io/d-sponsor-sdk/#/getting-started/quickstart-for-integrations)
+        - [SDK](https://d-cast-media.github.io/d-sponsor-sdk/#/getting-started/quickstart-for-integrations#sdk)
+        - [Iframe Integration](https://d-cast-media.github.io/d-sponsor-sdk/#/getting-started/quickstart-for-integrations#iframe-integration)
+        - [React Integration](https://d-cast-media.github.io/d-sponsor-sdk/#/getting-started/quickstart-for-integrations#react-integration)
+        - [HTML Integration](https://d-cast-media.github.io/d-sponsor-sdk/#/getting-started/quickstart-for-integrations#html)
+            - [With the SDK](https://d-cast-media.github.io/d-sponsor-sdk/#/getting-started/quickstart-for-integrations#with-the-sdk)
+            - [Pure HTML](https://d-cast-media.github.io/d-sponsor-sdk/#/getting-started/quickstart-for-integrations#pure-html)
+    - API Reference
+        - [DSponsorSDK](https://d-cast-media.github.io/d-sponsor-sdk/#/api-reference/DSponsorSDK)
+        - Primitives
+            - [Ad](https://d-cast-media.github.io/d-sponsor-sdk/#/api-reference/primitives/Ad)
+            - [ChainNetwork](https://d-cast-media.github.io/d-sponsor-sdk/#/api-reference/primitives/ChainNetwork)
+            - [Token](https://d-cast-media.github.io/d-sponsor-sdk/#/api-reference/primitives/Token)
+        - Services:
+            - [AdSpaceRenderer](https://d-cast-media.github.io/d-sponsor-sdk/#/api-reference/services/AdSpaceRenderer)
+            - [DSponsorAdmin](https://d-cast-media.github.io/d-sponsor-sdk/#/api-reference/services/DSponsorAdmin)
+            - [DSponsorNFT](https://d-cast-media.github.io/d-sponsor-sdk/#/api-reference/services/DSponsorNFT)
+        - Utils:
+            - [convertABIToShortABI](https://d-cast-media.github.io/d-sponsor-sdk/#/api-reference/utils/convertABIToShortABI)
+            - [generatePrivateKey](https://d-cast-media.github.io/d-sponsor-sdk/#/api-reference/utils/generatePrivateKey)
+            - [isHexadecimal](https://d-cast-media.github.io/d-sponsor-sdk/#/api-reference/utils/isHexadecimal)
+            - [isNumber](https://d-cast-media.github.io/d-sponsor-sdk/#/api-reference/utils/isNumber)
+            - [stringToUint256](https://d-cast-media.github.io/d-sponsor-sdk/#/api-reference/utils/stringToUint256)
