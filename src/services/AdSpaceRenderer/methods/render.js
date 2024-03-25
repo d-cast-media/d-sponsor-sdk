@@ -141,6 +141,7 @@ export default function render(options = {}) {
                     console.log('AdSpaceRenderer: Buying ad space...');
                     let tokenId = ad.tokenId;
                     const adParameters = ["imageURL","linkURL"]
+                    const tokenData = options.tokenData || '0x';
                     const valuePrice = BigInt(self.prices[0]);
                     const bps = self.bps;
                     const fee = (valuePrice * BigInt(bps)) / BigInt(10000); // Calculate fee based on BPS
@@ -150,13 +151,17 @@ export default function render(options = {}) {
                         tokenId,
                         to: self.signer.getAddress(),
                         currency: self.currencies[0],
-                        tokenData: "tokenData",
+                        tokenData,
                         offerId: self.offerId,
                         adParameters,
                         adDatas: [imageURL, linkURL],
                         referralAdditionalInformation: self.referral
                     }
-                    const tx = await dsponsorAdmin.mintAndSubmit(mintParameters, {value:feeAndValue.toString()});
+                    try{
+                        await dsponsorAdmin.mintAndSubmit(mintParameters, {value:feeAndValue.toString()});
+                    } catch (e) {
+                        console.error('AdSpaceRenderer: Error buying ad space', e);
+                    }
                 }
 
                 link.appendChild(text);

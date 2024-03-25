@@ -16,7 +16,10 @@ export default function select(selection) {
             const [rows, cols] = count.split('x') ?? [1, count];
             const grid = [];
             // List of array of available id without those in adList as string
-            let availableSlots = Array.from({ length: parseInt(this.maxSupply) }, (_, i) => i + 1).map(String);
+            let availableSlots = this.offer.allowedTokens;
+            // let availableSlots = Array.from({ length: parseInt(this.offer.maxSupply) }, (_, i) => i + 1).map(String);
+
+
             for (let i = 0; i < rows; i++) {
                 // We need to create a row of ads, with placeholders for empty slots
                 const row = []
