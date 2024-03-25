@@ -2,7 +2,7 @@ import getChainConfig from "./getChainConfig.js";
 import {ethers} from "ethers";
 
 class ChainNetwork {
-    constructor({ rpc, chainName, contracts, chainId, assets } = {
+    constructor({rpc, chainName, graphApiUrl, contracts, chainId, assets} = {
         chainName: 'polygon-mumbai'
     }) {
         let defaultConfig = {};
@@ -14,9 +14,10 @@ class ChainNetwork {
         }
 
         this.rpc = rpc ?? defaultConfig.rpc;
+        this.graphApiUrl = graphApiUrl ?? defaultConfig.graphApiUrl;
         this.provider = new ethers.JsonRpcProvider(this.rpc);
-        this.contracts = Object.assign( defaultConfig.contracts, contracts)
-        this.assets = Object.assign( defaultConfig.assets, assets)
+        this.contracts = Object.assign(defaultConfig.contracts, contracts)
+        this.assets = Object.assign(defaultConfig.assets, assets)
         this.chainName = chainName
         this.chainId = chainId ?? defaultConfig.chainId
     }
@@ -26,11 +27,15 @@ class ChainNetwork {
     }
 
     getCurrencyDecimals(currencySymbol) {
-        if (currencySymbol === 'USDC') {
-            return 6;
-        }
+        // We could use ethers to get the decimals for the currencySymbol
+        // However, we are using a hardcoded value for now to avoid the need to make a call to the blockchain
+        // to get the decimals for the currencySymbol every time we need it.
 
-        return 18;
+        if (this.assets[currencySymbol] === undefined) {
+            throw new Error(`Currency ${currencySymbol} not found in assets`);
+        }
+        return this.assets[currencySymbol].decimals;
+
     }
 }
 
