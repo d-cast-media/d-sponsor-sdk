@@ -22,15 +22,25 @@ import updateProtocolFee from "./methods/updateProtocolFee.js";
 import {ApolloClient, gql, InMemoryCache} from "@apollo/client/core/core.cjs";
 import DSponsorNFT from "../DSponsorNFT/DSponsorNFT.js";
 import ChainNetwork from "../../primitives/ChainNetwork/ChainNetwork.js";
-
-const APIURL = 'https://api.studio.thegraph.com/proxy/65744/dsponsor-mumbai/0.0.4/'
+import generatePrivateKey from "../../utils/generatePrivateKey.js";
+import isNumber from "../../utils/isNumber.js";
+import getAdsProposalsFromOfferId from "./methods/getAdsProposalsFromOfferId.js";
+import getValidatedAdsFromOfferId from "./methods/getValidatedAdsFromOfferId.js";
+import getAdProposalFromProposalId from "./methods/getAdProposalFromProposalId.js";
+import getOffer from "./methods/getOffer.js";
 
 class DSponsorAdmin {
     constructor({address, signer, chain} = {}) {
-        this.address = address
+        this.chain = new ChainNetwork(chain);
 
+        this.address = address ?? this.chain.contracts.DSponsorAdmin;
 
         this.signer = signer;
+        if(!this.signer) {
+            const privateKey = generatePrivateKey();
+            const wallet = new ethers.Wallet(privateKey, this.chain.provider);
+            this.signer = wallet;
+        }
 
         this.contract = new ethers.Contract(
             this.address,
@@ -98,15 +108,14 @@ class DSponsorAdmin {
                 'error UnallowedValidatorOperation(address msgSender, uint256 offerId)',
                 'error ZeroAddress()',
             ],
-            signer
+            this.chain.provider
         )
 
         this.client = new ApolloClient({
-            uri: APIURL,
+            uri: this.chain.graphApiUrl,
             cache: new InMemoryCache(),
         });
 
-        this.chain = new ChainNetwork(chain);
 
     }
 
@@ -140,69 +149,7 @@ class DSponsorAdmin {
         return Object.values(Object.fromEntries(offers));
     }
 
-    async getOffer(offerIdOrId) {
-
-        const isHex = (str) => {
-            return /^[0-9A-Fa-f]{6}$/.test(str);
-        }
-
-        const offerId = (isHex(offerIdOrId)) ? offerIdOrId : null;
-
-        console.log('offerId:', offerId);
-        if(offerId) {
-            const getOfferQueryByOfferId = `
-               {
-                  updateOffers(where:{
-                    offerId: ${offerId}
-                  }) {
-                    offerId
-                    id
-                    disable
-                    name
-                    rulesURI
-                    nftContract
-                    blockNumber
-                    blockTimestamp
-                    transactionHash
-                    __typename
-                  }
-                  `;
-
-            const offerRequest = await this.client.query({
-                query: gql(getOfferQueryByOfferId),
-            });
-
-            return offerRequest.data.updateOffers[0];
-        }
-
-        const getOfferQueryById = `
-        {
-                updateOffers(where:{
-                    offerId: "${offerIdOrId}"
-                }) {
-                    offerId
-                    id
-                    disable
-                    name
-                    rulesURI
-                    nftContract
-                    blockNumber
-                    blockTimestamp
-                    transactionHash
-                    __typename
-                }
-        }
-               `;
-
-        const offerRequest = await this.client.query({
-            query: gql(getOfferQueryById),
-        });
-
-        return offerRequest.data.updateOffers[0];
-    }
-
     getDSponsorNFT(address) {
-        console.log({address})
         return new DSponsorNFT({
             address,
             signer: this.signer,
@@ -213,7 +160,11 @@ class DSponsorAdmin {
 
 DSponsorAdmin.prototype.createDSponsorNFTAndOffer = createDSponsorNFTAndOffer;
 DSponsorAdmin.prototype.createOffer = createOffer;
+DSponsorAdmin.prototype.getAdProposalFromProposalId = getAdProposalFromProposalId;
+DSponsorAdmin.prototype.getAdsProposalsFromOfferId = getAdsProposalsFromOfferId;
+DSponsorAdmin.prototype.getValidatedAdsFromOfferId = getValidatedAdsFromOfferId;
 DSponsorAdmin.prototype.getBPS = getBPS;
+DSponsorAdmin.prototype.getOffer = getOffer;
 DSponsorAdmin.prototype.getCurrentTrustedForwarder = getCurrentTrustedForwarder;
 DSponsorAdmin.prototype.getNFTFactoryContractAddress = getNFTFactoryContractAddress;
 DSponsorAdmin.prototype.getOfferContract = getOfferContract;
