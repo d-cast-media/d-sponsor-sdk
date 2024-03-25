@@ -1,4 +1,4 @@
-import {gql} from "@apollo/client";
+import {gql} from "@apollo/client/core/core.cjs";
 
 export default async function getCreationInfo() {
     const contractAddress = this.address;
