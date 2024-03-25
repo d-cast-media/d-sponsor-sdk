@@ -47,12 +47,23 @@ const dsponsorSDK = new DSponsorSDK();
 
 // For custom configuration, pass the desired chain and private key
 const customDsponsorSDK = new DSponsorSDK({
-    chain: {
-        chainName: 'ethereum-sepolia', // Example for Sepolia testnet
-        rpc: 'https://sepolia.infura.io/v3/{infura_project_id}',
-    },
-    privateKey: 'your-private-key-here',
+    chain: new ChainNetwork({...}),// Custom chain network - default to Polygon Mumbai
+    privateKey: 'your-private-key-here', // Optional for signing transactions
 });
+
+
+const renderer = dsponsorSDK.getAdSpaceRenderer({
+    offerId: 23,// Offer ID to render
+    selector: 'dsponsor_div',
+    selection: 'grid 2x2'
+});
+
+//await renderer.connect(); // Connect to the signer (e.g., Metamask) for transactions (on browser)
+
+await renderer.preload(); // Preload ad data
+
+const container = renderer.render();
+document.getElementById('dsponsor').appendChild(container);
 ```
 
 After initializing DSponsorSDK, you can interact with the DSponsor ecosystem:

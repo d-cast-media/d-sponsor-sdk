@@ -11,14 +11,14 @@ This SDK simplifies interactions with smart contracts for NFT creation, manageme
 ```javascript
 import DSponsorSDK from '@dsponsor/sdk';
 
-// Initialize with default settings (e.g., Polygon Mumbai)
+// Initialize with default settings (Polygon Mumbai)
+// Will use a new private key if not provided
 const dsponsorSDK = new DSponsorSDK();
 
-// For custom blockchain configurations, specify the chain details and your private key
+// For custom configuration, pass the desired chain and private key
 const customDsponsorSDK = new DSponsorSDK({
-    chain: 'ethereum-sepolia', // Example: Sepolia testnet
-    rpc: 'https://sepolia.infura.io/v3/{infura_project_id}',
-    privateKey: 'your-private-key-here',
+    chain: new ChainNetwork({...}),// Custom chain network - default to Polygon Mumbai
+    privateKey: 'your-private-key-here', // Optional for signing transactions
 });
 ```
 
