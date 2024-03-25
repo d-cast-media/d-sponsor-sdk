@@ -20,7 +20,7 @@ Uses the Ethereum library ethers.js.
     <title>Home</title>
     <script type="module">
         import { AdSpaceRenderer } from 'https://unpkg.com/@dsponsor/sdk';
-        const sponsoredItem = AdSpaceRenderer.fromContract('0xd8ab5d4aef7c1f4a13da4e25559d688cc1e4b2b3', {
+        const sponsoredItem = AdSpaceRenderer.fromOffer(23, {
             selector: 'dsponsor',
         })
         await sponsoredItem.connect();
@@ -59,158 +59,81 @@ After initializing DSponsorSDK, you can interact with the DSponsor ecosystem:
 
 ```js
 // Get the address of the DSponsorAdmin contract
-console.log(`DSponsorAdmin Address: ${dsponsorSDK.contracts.DSponsorAdmin.address}`);
-
+const dsponsorAdmin = dsponsorSDK.getDSponsorAdmin();
 // Example: Fetching the base point share (BPS) value
 async function fetchBPS() {
-    const bps = await dsponsorSDK.contracts.DSponsorAdmin.getBPS();
+    const bps = await dsponsorAdmin.getBPS();
     console.log(`Current BPS: ${bps}`);
 }
 
 fetchBPS();
 ```
 
-#### API
+### API Reference
 
-##### DSponsorSDK
-
-- Constructor: Initialize the SDK with specific blockchain settings.
-
-```javascript
-new DSponsorSDK({chain, privateKey});
-```
-
-##### DSponsorAdmin Service
-
-- getBPS: Fetches the current Base Point Share (BPS) value.
-
-```javascript
-dsponsorSDK.contracts.DSponsorAdmin.getBPS();
-```
-
-- getCurrentTrustedForwarder: Gets the address of the current trusted forwarder.
-```javascript
-dsponsorSDK.contracts.DSponsorAdmin.getCurrentTrustedForwarder();
-```
-- 
-- getNFTFactoryContractAddress: Retrieves the address of the NFT Factory contract.
-
-```javascript
-dsponsorSDK.contracts.DSponsorAdmin.getNFTFactoryContractAddress(); 
-```
-
-- getOfferContract: Fetches the contract address for a specific offer ID.
-
-```javascript
-
-dsponsorSDK.contracts.DSponsorAdmin.getOfferContract(offerId); 
-```
-
-- getOfferProposals: Retrieves proposals for a specific offer.
-
-```javascript
-
-dsponsorSDK.contracts.DSponsorAdmin.getOfferProposals(offerId, tokenId, adParameter); 
-```
-
-- getOwnerAddress: Returns the address of the contract owner.
-
-```javascript
-
-dsponsorSDK.contracts.DSponsorAdmin.getOwnerAddress(); 
-```
-
-- getRecipientAddress: Fetches the recipient address for protocol fees.
-
-```javascript
-
-dsponsorSDK.contracts.DSponsorAdmin.getRecipientAddress(); 
-```
-
-- getSwapRouterAddress: Retrieves the address of the swap router.
-
-```javascript
-
-dsponsorSDK.contracts.DSponsorAdmin.getSwapRouterAddress(); 
-```
-
-- isAllowedAdParameter: Checks if an ad parameter is allowed for a specific offer.
-
-```javascript
-
-dsponsorSDK.contracts.DSponsorAdmin.isAllowedAdParameter(offerId, adParameter); 
-```
-
-- isOfferAdmin: Verifies if an address is an admin for a specific offer.
-
-```javascript
-
-dsponsorSDK.contracts.DSponsorAdmin.isOfferAdmin(offerId, admin); 
-```
-
-- isOfferDisabled: Checks if a specific offer is disabled.
-
-```javascript
-dsponsorSDK.contracts.DSponsorAdmin.isOfferDisabled(offerId);
-```
-
-- approve: Approves a specific amount of currency for the DSponsorAdmin contract.
-
-```javascript
-dsponsorSDK.approve({currency, amount});
-```
-
-- createDSponsorNFTAndOffer: Creates a new DSponsor NFT and offer.
-
-```javascript
-const currency = dsponsor.chain.getCurrencyAddress('USDC');
-const nftParams = {
-    tokenId: 1,
-    to: minter.address,
-    currency,
-    tokenData: 'tokenData',
-    offerId: 20,
-    adParameters: ['squareLogoURL', 'linkURL'],
-    adDatas: ['adData1', 'adData2'],
-    referralAdditionalInformation: 'additionalInformation'
-};
-const offerParams = {
-    name: "TechCast Podcast",
-    rulesURI: "https://techcast.com/rules",
-    options: {
-        admins: [minter.address],
-        validators: [minter.address],
-        adParameters: ["squareLogoURL", "linkURL"]
-    }
-};
-await dsponsor.contracts.DSponsorAdmin.createDSponsorNFTAndOffer(nftParams, offerParams);
-```
+- Getting started
+    - [Creators - Quick start](getting-started/quickstart-for-creators.md)
+        - [DSponsorSDK](getting-started/quickstart-for-creators#sdk.md)
+        - [DSponsorNFT](getting-started/quickstart-for-creators#nft.md)
+    - [Integrations - Quick start](getting-started/quickstart-for-integrations.md)
+        - [SDK](getting-started/quickstart-for-integrations.md#sdk)
+        - [Iframe Integration](getting-started/quickstart-for-integrations.md#iframe-integration)
+        - [React Integration](getting-started/quickstart-for-integrations.md#react-integration)
+        - [HTML Integration](getting-started/quickstart-for-integrations.md#html)
+            - [With the SDK](getting-started/quickstart-for-integrations.md#with-the-sdk)
+            - [Pure HTML](getting-started/quickstart-for-integrations.md#pure-html)
 
 
-- mintAndSubmit: Mints a new DSponsor NFT and submits it to the offer.
+[//]: # (- Getting started)
 
-```javascript
-const currency = dsponsor.chain.getCurrencyAddress('USDC');
-const mintParams = {
-    tokenId: 1,
-    to: minter.address,
-    currency,
-    tokenData: 'tokenData',
-    offerId: 20,
-    adParameters: ['squareLogoURL', 'linkURL'],
-    adDatas: ['adData1', 'adData2'],
-    referralAdditionalInformation: 'additionalInformation'
-};
-await dsponsor.contracts.DSponsorAdmin.mintAndSubmit(mintParams, {
-    value: feeAndValue
-})
-```
+[//]: # (    - [Creators - Quick start]&#40;getting-started/quickstart-for-creators.md&#41;)
 
-#### Additional Utilities
+[//]: # (        - [DSponsorSDK]&#40;getting-started/quickstart-for-creators#sdk.md&#41;)
 
-generatePrivateKey: Generates a new private key.
+[//]: # (        - [DSponsorNFT]&#40;getting-started/quickstart-for-creators#nft.md&#41;)
 
-```javascript
+[//]: # (    - [Integrations - Quick start]&#40;getting-started/quickstart-for-integrations.md&#41;)
 
-DSponsorSDK.generatePrivateKey(); 
-```
+[//]: # (        - [SDK]&#40;getting-started/quickstart-for-integrations.md#sdk&#41;)
+
+[//]: # (        - [Iframe Integration]&#40;getting-started/quickstart-for-integrations.md#iframe-integration&#41;)
+
+[//]: # (        - [React Integration]&#40;getting-started/quickstart-for-integrations.md#react-integration&#41;)
+
+[//]: # (        - [HTML Integration]&#40;getting-started/quickstart-for-integrations.md#html&#41;)
+
+[//]: # (            - [With the SDK]&#40;getting-started/quickstart-for-integrations.md#with-the-sdk&#41;)
+
+[//]: # (            - [Pure HTML]&#40;getting-started/quickstart-for-integrations.md#pure-html&#41;)
+
+[//]: # (    - API Reference)
+
+[//]: # (        - [DSponsorSDK]&#40;api-reference/DSponsorSDK.md&#41;)
+
+[//]: # (        - Primitives)
+
+[//]: # (            - [Ad]&#40;api-reference/primitives/Ad.md&#41;)
+
+[//]: # (            - [ChainNetwork]&#40;api-reference/primitives/ChainNetwork.md&#41;)
+
+[//]: # (            - [Token]&#40;api-reference/primitives/Token.md&#41;)
+
+[//]: # (        - Services:)
+
+[//]: # (            - [AdSpaceRenderer]&#40;api-reference/services/AdSpaceRenderer.md&#41;)
+
+[//]: # (            - [DSponsorAdmin]&#40;api-reference/services/DSponsorAdmin.md&#41;)
+
+[//]: # (            - [DSponsorNFT]&#40;api-reference/services/DSponsorNFT.md&#41;)
+
+[//]: # (        - Utils:)
+
+[//]: # (            - [convertABIToShortABI]&#40;api-reference/utils/convertABIToShortABI.md&#41;)
+
+[//]: # (            - [generatePrivateKey]&#40;api-reference/utils/generatePrivateKey.md&#41;)
+
+[//]: # (            - [isHexadecimal]&#40;api-reference/utils/isHexadecimal.md&#41;)
+
+[//]: # (            - [isNumber]&#40;api-reference/utils/isNumber.md&#41;)
+
+[//]: # (            - [stringToUint256]&#40;api-reference/utils/stringToUint256.md&#41;)
