@@ -28,8 +28,8 @@ import getAdProposalFromProposalId from "./methods/getAdProposalFromProposalId.j
 import getOffer from "./methods/getOffer.js";
 import getOffers from "./methods/getOffers.js";
 import getDSponsorNFT from "./methods/getDSponsorNFT.js";
-import generatePrivateKey from "../../utils/generatePrivateKey.js";
 import getMintPricesFromId from "./methods/getMintPricesFromId.js";
+import generatePrivateKey from "../../utils/generatePrivateKey.js";
 
 class DSponsorAdmin {
     constructor({address, signer, chain} = {}) {
