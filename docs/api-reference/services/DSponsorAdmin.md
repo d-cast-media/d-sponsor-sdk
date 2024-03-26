@@ -205,6 +205,21 @@ Note: The `getOffers` method misses the `maxSupply`, `prices`, and `currencies` 
 Use the `getOffer` method to get the full details of a specific offer.
 
 
+### `getOffersAdmin(query)`
+
+Retrieves all offers associated to a specific admin.
+
+**Parameters:**
+
+- `query` (Object): The query object.
+  - `address` (String): The address of the admin.
+
+**Returns:**
+
+- `Promise<Object[]>`: A promise that resolves with the offers update admins data associated to the admin.
+
+
+
 ### `getOwnerAddress()`
 
 Retrieves the owner address of the contract.

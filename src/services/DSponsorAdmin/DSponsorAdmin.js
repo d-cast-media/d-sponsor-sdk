@@ -32,6 +32,7 @@ import getDSponsorNFT from "./methods/getDSponsorNFT.js";
 import getMintPrices from "./methods/getMintPrices.js";
 import generatePrivateKey from "../../utils/generatePrivateKey.js";
 import getPendingAds from "./methods/getPendingAds.js";
+import getOffersAdmin from "./methods/getOffersAdmin.js";
 
 class DSponsorAdmin {
     constructor({address, signer, chain} = {}) {
@@ -132,6 +133,7 @@ DSponsorAdmin.prototype.getMintPrices = getMintPrices;
 DSponsorAdmin.prototype.getBPS = getBPS;
 DSponsorAdmin.prototype.getOffer = getOffer;
 DSponsorAdmin.prototype.getOffers = getOffers;
+DSponsorAdmin.prototype.getOffersAdmin = getOffersAdmin;
 DSponsorAdmin.prototype.getDSponsorNFT = getDSponsorNFT;
 DSponsorAdmin.prototype.getCurrentTrustedForwarder = getCurrentTrustedForwarder;
 DSponsorAdmin.prototype.getNFTFactoryContractAddress = getNFTFactoryContractAddress;
