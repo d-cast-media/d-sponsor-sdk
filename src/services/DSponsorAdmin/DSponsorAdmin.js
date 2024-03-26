@@ -11,6 +11,7 @@ import getNFTFactoryContractAddress from "./methods/getNFTFactoryContractAddress
 import getCurrentTrustedForwarder from "./methods/getCurrentTrustedForwarder.js";
 import getOwnerAddress from "./methods/getOwnerAddress.js";
 import getRecipientAddress from "./methods/getRecipientAddress.js";
+import getRejectedAds from "./methods/getRejectedAds.js";
 import getSwapRouterAddress from "./methods/getSwapRouterAddress.js";
 import createDSponsorNFTAndOffer from "./methods/createDSponsortNFTAndOffer.js";
 import createOffer from "./methods/createOffer.js";
@@ -30,6 +31,7 @@ import getOffers from "./methods/getOffers.js";
 import getDSponsorNFT from "./methods/getDSponsorNFT.js";
 import getMintPrices from "./methods/getMintPrices.js";
 import generatePrivateKey from "../../utils/generatePrivateKey.js";
+import getPendingAds from "./methods/getPendingAds.js";
 
 class DSponsorAdmin {
     constructor({address, signer, chain} = {}) {
@@ -136,7 +138,9 @@ DSponsorAdmin.prototype.getNFTFactoryContractAddress = getNFTFactoryContractAddr
 DSponsorAdmin.prototype.getOfferContract = getOfferContract;
 DSponsorAdmin.prototype.getOfferProposals = getOfferProposals;
 DSponsorAdmin.prototype.getOwnerAddress = getOwnerAddress;
+DSponsorAdmin.prototype.getPendingAds = getPendingAds;
 DSponsorAdmin.prototype.getRecipientAddress = getRecipientAddress;
+DSponsorAdmin.prototype.getRejectedAds = getRejectedAds;
 DSponsorAdmin.prototype.getSwapRouterAddress = getSwapRouterAddress;
 DSponsorAdmin.prototype.isAllowedAdParameter = isAllowedAdParameter;
 DSponsorAdmin.prototype.isOfferAdmin = isOfferAdmin;

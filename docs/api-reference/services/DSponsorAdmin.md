@@ -212,6 +212,20 @@ Retrieves the owner address of the contract.
 
 - `String`: The owner address of the contract.
 
+### `getPendingAds(query)`
+
+Retrieves pending ads based on the specified query.
+
+**Parameters:**
+
+- `query` (Object): The query object.
+  - `offerId` (String): The ID of the offer.
+
+**Returns:**
+
+- `Promise<null|Ad[]>`: A promise that resolves with the pending ads.
+
+
 ### `getRecipientAddress()`
 
 Retrieves the recipient address for the protocol fee.
@@ -219,6 +233,20 @@ Retrieves the recipient address for the protocol fee.
 **Returns:**
 
 - `String`: The recipient address for the protocol fee.
+
+
+### `getRejectedAds(query)`
+
+Retrieves rejected ads based on the specified query.
+
+**Parameters:**
+
+- `query` (Object): The query object.
+  - `offerId` (String): The ID of the offer.
+
+**Returns:**
+
+- `Promise<null|Ad[]>`: A promise that resolves with the rejected ads.
 
 
 ### `getSwapRouterAddress()`
