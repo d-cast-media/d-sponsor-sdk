@@ -65,7 +65,8 @@ Retrieves an ad proposal by its proposal ID.
 **Parameters:**
 
 - `query` (Object): The query object.
-  - `proposalId` (String): The ID of the proposal.
+  - `proposalId` (String): The ID of the proposal. (Optional)
+  - `offerId` (String): The ID of the offer. (Optional)
 
 **Returns:**
 

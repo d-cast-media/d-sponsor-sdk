@@ -17,6 +17,7 @@ export default async function getAdsProposals({offerId}) {
         query GetAdProposals($offerId: ID!) {
             updateAdProposals(first: 500, where: {offerId: $offerId}) {
                 offerId
+                proposalId
                 tokenId
                 adParameter
                 data
@@ -31,20 +32,30 @@ export default async function getAdsProposals({offerId}) {
         },
     });
 
-    const adData = adsRequest.data.updateAdProposals;
+    const adProposalsList = {};
 
-    const adList = {};
 
-    for (const ad of adData) {
-        const key = `${ad.offerId}-${ad.tokenId}`;
-        if (!adList[key]) {
-            adList[key] = new Ad({ offerId: ad.offerId, tokenId: ad.tokenId });
+    if (adsRequest.data.updateAdProposals) {
+        for (const ad of adsRequest.data.updateAdProposals) {
+            const adProposal = {
+                offerId: null,
+                tokenId: null,
+                records: {}
+            }
+
+            const {tokenId, offerId,proposalId} = ad;
+
+            adProposal.offerId = offerId;
+            adProposal.tokenId = tokenId;
+
+            if (ad.adParameter) {
+                adProposal.records[ad.adParameter] = {value:ad.data, proposalId};
+            }
+            adProposalsList[`${offerId}-${tokenId}`] = adProposal;
         }
-        if(ad.adParameter){
-            adList[key].addRecord({ kind: ad.adParameter, value: ad.data });
-        }
+        return Object.values(adProposalsList);
     }
 
-    // Convert adList values to an array for easy iteration
-    return Object.values(adList);
+
+    return null;
 }
