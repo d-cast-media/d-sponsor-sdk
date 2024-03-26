@@ -14,20 +14,27 @@
           title="docsify-darklight-theme"
           type="text/css"
   />
-
 </head>
 <body>
   <div id="app"></div>
   <script>
     window.$docsify = {
       name: 'DSponsor SDK',
+
       repo: 'https://github.com/d-cast-media/dsponsor-sdk',
       loadSidebar: "_sidebar.md",
-      themeColor: '#3F51B5',
+      defaultTheme: 'dark',
+      theme: 'docsify-darklight-theme',
+      search: {
+        paths: 'auto',
+        placeholder: 'Search',
+        noData: 'No Results.',
+      }
     }
   </script>
   <!-- Docsify v4 -->
   <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
+  <script src="//unpkg.com/docsify/lib/plugins/search.min.js"></script>
   <script
           src="//cdn.jsdelivr.net/npm/docsify-darklight-theme@latest/dist/index.min.js"
           type="text/javascript">
