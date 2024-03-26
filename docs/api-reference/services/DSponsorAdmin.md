@@ -223,6 +223,25 @@ Retrieves all offers associated to a specific admin.
 
 - `Promise<Object[]>`: A promise that resolves with the offers update admins data associated to the admin.
 
+### `getOwnedOfferTokens(query)`
+
+Retrieves all ads owned by the specified address.
+
+**Parameters:**
+
+- `query` (Object): The query object.
+  - `address` (String): The address of the owner.
+
+**Returns:**
+
+- `Promise<Object[]>`: An array of ads.
+
+**Example:**
+
+```javascript
+const ads = await admin.getOwnedOfferTokens({ address: '0x1234...' });
+console.log(ads);
+```
 
 
 ### `getOwnerAddress()`

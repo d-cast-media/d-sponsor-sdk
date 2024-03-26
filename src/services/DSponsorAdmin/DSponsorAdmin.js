@@ -33,6 +33,7 @@ import getMintPrices from "./methods/getMintPrices.js";
 import generatePrivateKey from "../../utils/generatePrivateKey.js";
 import getPendingAds from "./methods/getPendingAds.js";
 import getOffersAdmin from "./methods/getOffersAdmin.js";
+import getOwnedOfferTokens from "./methods/getOwnedOfferTokens.js";
 
 class DSponsorAdmin {
     constructor({address, signer, chain} = {}) {
@@ -121,6 +122,8 @@ class DSponsorAdmin {
             cache: new InMemoryCache(),
         });
     }
+
+
 }
 
 DSponsorAdmin.prototype.createDSponsorNFTAndOffer = createDSponsorNFTAndOffer;
@@ -133,6 +136,7 @@ DSponsorAdmin.prototype.getMintPrices = getMintPrices;
 DSponsorAdmin.prototype.getBPS = getBPS;
 DSponsorAdmin.prototype.getOffer = getOffer;
 DSponsorAdmin.prototype.getOffers = getOffers;
+DSponsorAdmin.prototype.getOwnedOfferTokens = getOwnedOfferTokens;
 DSponsorAdmin.prototype.getOffersAdmin = getOffersAdmin;
 DSponsorAdmin.prototype.getDSponsorNFT = getDSponsorNFT;
 DSponsorAdmin.prototype.getCurrentTrustedForwarder = getCurrentTrustedForwarder;
