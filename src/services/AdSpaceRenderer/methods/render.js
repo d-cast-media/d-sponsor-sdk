@@ -99,11 +99,9 @@ export default function render(options = {}) {
     container.innerHTML = '';
     const self = this;
     // We need to get our metamask signer
-
-
     const dsponsorAdmin = self.admin;
 
-    const ads = this.select(this.selection, {includeOpenAds: true});
+    const ads = this.select(this.selection);
     ads.forEach(adsRow => {
         adsRow.forEach(ad => {
             const adElement = createElement('div');

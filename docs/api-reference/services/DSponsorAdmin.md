@@ -184,9 +184,14 @@ Retrieves proposals for a specific offer, token, and advertisement parameter.
 - `Object[]`: An array of proposals.
 
 
-### `getOffers()`
+### `getOffers([query])`
 
 Retrieves all offers managed by the DSponsor system.
+
+**Parameters:**
+
+- `query` (Object): The query object. (Optional)
+- `query.address` (string): The address to filter offers by. (Optional - Returns all offers of all admins if not provided)
 
 **Returns:**
 
