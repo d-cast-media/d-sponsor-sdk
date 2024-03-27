@@ -23,7 +23,7 @@ import transferOwnership from "./methods/transferOwnership.js";
 import updateOffer from "./methods/updateOffer.js";
 import updateProtocolFee from "./methods/updateProtocolFee.js";
 import ChainNetwork from "../../primitives/ChainNetwork/ChainNetwork.js";
-import getAdsProposals from "./methods/getAdsProposals.js";
+import getAdProposals from "./methods/getAdProposals.js";
 import getValidatedAds from "./methods/getValidatedAds.js";
 import getAdProposal from "./methods/getAdProposal.js";
 import getOffer from "./methods/getOffer.js";
@@ -129,7 +129,7 @@ class DSponsorAdmin {
 DSponsorAdmin.prototype.createDSponsorNFTAndOffer = createDSponsorNFTAndOffer;
 DSponsorAdmin.prototype.createOffer = createOffer;
 DSponsorAdmin.prototype.getAdProposal = getAdProposal;
-DSponsorAdmin.prototype.getAdsProposals = getAdsProposals;
+DSponsorAdmin.prototype.getAdsProposals = getAdProposals;
 DSponsorAdmin.prototype.getValidatedAds = getValidatedAds;
 DSponsorAdmin.prototype.getAllowedTokens = getAllowedTokens;
 DSponsorAdmin.prototype.getMintPrices = getMintPrices;
