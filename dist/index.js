@@ -239,7 +239,7 @@ this in the docs: http://dev.apollodata.com/core/fragments.html#unique-names`):T
                 data
             }
         }
-    `),variables:{offerId:t}}),n={};if(r.data.updateAdProposals){for(let i of r.data.updateAdProposals){let s={offerId:null,tokenId:null,records:{}},{tokenId:o,offerId:a,proposalId:c}=i;s.offerId=a,s.tokenId=o,i.adParameter&&(s.records[i.adParameter]={value:i.data,proposalId:c}),n[`${a}-${o}`]=s}return Object.values(n)}return null}var eP=tr(er(),1);async function Rv({offerId:t}){if(!xr(t))throw new Error(`Invalid offer ID: ${t}`);let r=await this.client.query({query:(0,eP.gql)(`
+    `),variables:{offerId:t}}),n={};if(r.data.updateAdProposals){for(let i of r.data.updateAdProposals){let{tokenId:s,offerId:o,proposalId:a,adParameter:c,data:u}=i,l=`${o}-${s}`;n[l]||(n[l]={offerId:o,tokenId:s,records:{}}),n[l].records[c]={value:u,proposalId:a}}return Object.values(n)}return null}var eP=tr(er(),1);async function Rv({offerId:t}){if(!xr(t))throw new Error(`Invalid offer ID: ${t}`);let r=await this.client.query({query:(0,eP.gql)(`
         query GetValidatedProposals($offerId: ID!) {
             updateAdValidations(
                 orderBy: blockNumber,
