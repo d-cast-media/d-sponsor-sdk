@@ -341,7 +341,7 @@ this in the docs: http://dev.apollodata.com/core/fragments.html#unique-names`):T
                 transactionHash,
                 __typename
              }
-        }`;return(await this.client.query({query:(0,rP.gql)(e)})).data.updateDefaultMintPrices.map(i=>({id:i.id,amount:i.amount,currency:i.currency,enabled:i.enabled,blockNumber:i.blockNumber,blockTimestamp:i.blockTimestamp,transactionHash:i.transactionHash}))}async function jv({offerId:t}){if(!xr(t))throw new Error(`Invalid offer ID: ${t}`);let e=await this.getAdsProposals({offerId:t}),r=await this.getValidatedAds({offerId:t}),n=await this.getRejectedAds({offerId:t});return e.filter(s=>!r.find(o=>o.id===s.id)&&!n.find(o=>o.id===s.id))}var nP=tr(er(),1);async function Fq({address:t}){let e=`
+        }`;return(await this.client.query({query:(0,rP.gql)(e)})).data.updateDefaultMintPrices.map(i=>({id:i.id,amount:i.amount,currency:i.currency,enabled:i.enabled,blockNumber:i.blockNumber,blockTimestamp:i.blockTimestamp,transactionHash:i.transactionHash}))}async function jv({offerId:t}){if(!xr(t))throw new Error(`Invalid offer ID: ${t}`);let e=await this.getAdsProposals({offerId:t}),r=await this.getValidatedAds({offerId:t}),n=await this.getRejectedAds({offerId:t});return e.filter(s=>{let o=Object.values(s.records).map(u=>u.proposalId),a=o.some(u=>r.some(l=>Object.values(l.records).some(f=>f.proposalId===u))),c=o.some(u=>n.some(l=>Object.values(l.records).some(f=>f.proposalId===u)));return!a&&!c})}var nP=tr(er(),1);async function Fq({address:t}){let e=`
         {
           updateOfferAdmins(
                orderBy: blockTimestamp,
