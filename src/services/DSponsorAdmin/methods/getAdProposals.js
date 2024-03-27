@@ -34,28 +34,26 @@ export default async function getAdProposals({offerId}) {
 
     const adProposalsList = {};
 
-
     if (adsRequest.data.updateAdProposals) {
         for (const ad of adsRequest.data.updateAdProposals) {
-            const adProposal = {
-                offerId: null,
-                tokenId: null,
-                records: {}
+            const {tokenId, offerId, proposalId, adParameter, data} = ad;
+            const key = `${offerId}-${tokenId}`;
+
+            // Initialize adProposal object if it doesn't exist
+            if (!adProposalsList[key]) {
+                adProposalsList[key] = {
+                    offerId: offerId,
+                    tokenId: tokenId,
+                    records: {}
+                };
             }
 
-            const {tokenId, offerId,proposalId} = ad;
-
-            adProposal.offerId = offerId;
-            adProposal.tokenId = tokenId;
-
-            if (ad.adParameter) {
-                adProposal.records[ad.adParameter] = {value:ad.data, proposalId};
-            }
-            adProposalsList[`${offerId}-${tokenId}`] = adProposal;
+            // Add or update the adParameter in records
+            adProposalsList[key].records[adParameter] = { value: data, proposalId };
         }
+
         return Object.values(adProposalsList);
     }
-
 
     return null;
 }
