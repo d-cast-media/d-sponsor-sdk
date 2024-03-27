@@ -8,9 +8,6 @@ import isNumber from "../../../utils/isNumber.js";
  * @returns {Promise<{id: *, tokenId: *, allowed: *, transactionHash: *}[]>} A promise that resolves with the allowed tokens.
  */
 export default async function getAllowedTokens({id}) {
-    if(!isNumber(id)) {
-        throw new Error(`Invalid ID: ${id}`);
-    }
     const getAllowedTokensQuery = `
        {
           tokensAllowlistUpdateds(where:{
